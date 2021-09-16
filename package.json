@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "description": "Vue/Electron based Visual React Native IDE",
-  "email":"danielmalencar2011@gmail.com",
+  "email": "danielmalencar2011@gmail.com",
   "author": "Daniel Melo Alencar",
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "core-js": "^3.6.5",
+    "splitpanes": "^2.3.8",
     "vue": "^2.6.11"
   },
   "devDependencies": {
