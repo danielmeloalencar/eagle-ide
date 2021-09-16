@@ -25,6 +25,12 @@ async function createWindow() {
     }
   })
 
+
+  win.webContents.on('did-finish-load', () => {
+    const {title} = require('../package.json')
+    win.setTitle(title)
+   })
+
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode
     await win.loadURL(process.env.WEBPACK_DEV_SERVER_URL)
@@ -36,6 +42,7 @@ async function createWindow() {
   
   }
 }
+
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
