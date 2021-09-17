@@ -25,10 +25,11 @@ async function createWindow() {
     }
   })
 
-
+  win.maximize();
+  
   win.webContents.on('did-finish-load', () => {
-    const {title} = require('../package.json')
-    win.setTitle(title)
+    const {title, version} = require('../package.json')
+    win.setTitle(`${title} V.${version} `)
    })
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
