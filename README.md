@@ -1,5 +1,6 @@
 # eagle-ide
 
+![Alt text](/screenshot.jpg?raw=true "React Native Visual IDEScreenshot")
 ## Project setup
 ```
 npm install
