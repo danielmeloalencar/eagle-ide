@@ -1,14 +1,15 @@
 <template>
-  <div class="container">
+  <div class="container" @click.self="handleCanvasClick">
     <vue-draggable-resizable
       :x="300"
       :y="150"
-      :w="100"
+      :w="300"
       :h="100"
       @dragging="onDrag"
       @resizing="onResize"
       :parent="false"
       :grid="[1, 1]"
+      active
     >
       <p>
         Eu sou um componente móvel<br /><br /><br />
@@ -35,6 +36,9 @@ export default {
     };
   },
   methods: {
+    handleCanvasClick: function (){
+      console.log("CARREGA PROPRIEDADES DO CANVAS")
+    },
     onResize: function (x, y, width, height) {
       this.x = x;
       this.y = y;
@@ -49,15 +53,16 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .container {
-  background-color: #FFF;
-  height: 100%;
+  height: 90%;
+  background-color:#FFF;
   width: 100%;
   overflow: hidden;
   border: 1px dotted rgb(80, 78, 78);
-  position: relative;
   color: black;
+  position: relative;
+
 }
 
 </style>

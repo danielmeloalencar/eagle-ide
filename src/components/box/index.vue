@@ -1,6 +1,9 @@
 <template>
   <div class="box">
     <div class="box-titulo">{{ titulo }}</div>
+    <div class="box-conteudo">
+    <slot> </slot>
+    </div>
   </div>
 </template>
 
@@ -27,9 +30,19 @@ export default {
 }
 
 .box-titulo {
+  display: flex;
   background-color: #bd93f9;
   height: 20px;
-  padding: 2px;
+  padding: 4px;
+  font-size: 14px;
+  align-items: center;
+}
+.box-conteudo {
+  display: flex;
+  align-items: flex-start;
+  padding: 10px;
+  justify-content: center;
+
 }
 
 </style>
