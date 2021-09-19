@@ -40,7 +40,7 @@ export default {
   },
   methods: {
     handleCanvasClick: function () {
-      console.log("CARREGA PROPRIEDADES DO CANVAS");
+      alert("CARREGA PROPRIEDADES DO CANVAS");
     },
     
     onResize: function (x, y, width, height) {
