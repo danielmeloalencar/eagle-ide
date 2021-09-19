@@ -20,7 +20,7 @@
               <Box titulo="Layers"> </Box>
             </pane>
             <pane min-size="5">
-              <Box titulo="Propriedades"> 
+              <Box titulo="Properties"> 
               </Box>
             </pane>
           </splitpanes>
@@ -57,21 +57,20 @@
                 () => {
                   this.activeTab = 1;
                 }
-              "
-            >
-              CÓDIGO
+              ">
+              CODE
             </div>
           </div>
         </pane>
         <pane min-size="5" max-size="20" size="15">
-          <Box titulo="Componentes">
+          <Box titulo="Components">
             <button style="flex:1"> Componente Teste </button>
           </Box>
         </pane>
       </splitpanes>
     </pane>
     <pane min-size="5" size="10" class="console">
-      <span>20:06 IDE Iniciada</span>
+      <span>20:06 IDE started</span>
     </pane>
   </splitpanes>
 </template>

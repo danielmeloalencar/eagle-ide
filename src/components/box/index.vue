@@ -31,10 +31,10 @@ export default {
 
 .box-titulo {
   display: flex;
-  background-color: #bd93f9;
-  height: 20px;
+  background-color: #604c7c;
+  height: 8px;
   padding: 4px;
-  font-size: 14px;
+  font-size: 11px;
   align-items: center;
 }
 .box-conteudo {
