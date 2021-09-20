@@ -8,7 +8,7 @@
   position: relative;
 }
 
-.splitpanes__splitter:before {
+.splitpanes__splitter::before {
   content: "";
   position: absolute;
   left: 0;
@@ -20,17 +20,17 @@
   border: dotted 2px rgba(98, 114, 164, 1);
 }
 
-.splitpanes__splitter:hover:before {
+.splitpanes__splitter:hover::before {
   opacity: 1;
 }
 
-.splitpanes--vertical > .splitpanes__splitter:before {
+.splitpanes--vertical > .splitpanes__splitter::before {
   left: -5px;
   right: -5px;
   height: 100%;
 }
 
-.splitpanes--horizontal > .splitpanes__splitter:before {
+.splitpanes--horizontal > .splitpanes__splitter::before {
   top: -5px;
   bottom: -5px;
   width: 100%;
