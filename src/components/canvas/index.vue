@@ -50,7 +50,7 @@ export default {
     };
   },
   methods: {
-    handleCanvasClick: function() {
+    handleCanvasClick: function () {
       alert("CARREGA PROPRIEDADES DO CANVAS");
     },
 

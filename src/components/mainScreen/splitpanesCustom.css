@@ -1,34 +1,37 @@
-
 .splitpanes {
-    background-color: #21222c;
-    color: #fff;
-  }
-  
-  .splitpanes__splitter {
-    background-color: #6272a4;
-    position: relative;
-  }
-  .splitpanes__splitter:before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0;
-    transition: opacity 0.4s;
-    background-color: rgba(98, 114, 164, 0.8);
-    opacity: 0;
-    z-index: 1;
-    border: dotted 2px rgba(98, 114, 164, 1);
-  }
-  .splitpanes__splitter:hover:before {
-    opacity: 1;
-  }
-  .splitpanes--vertical > .splitpanes__splitter:before {
-    left: -5px;
-    right: -5px;
-    height: 100%;
-  }
-  .splitpanes--horizontal > .splitpanes__splitter:before {
-    top: -5px;
-    bottom: -5px;
-    width: 100%;
-  }
+  background-color: #21222c;
+  color: #fff;
+}
+
+.splitpanes__splitter {
+  background-color: #6272a4;
+  position: relative;
+}
+
+.splitpanes__splitter::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  transition: opacity 0.4s;
+  background-color: rgba(98, 114, 164, 0.8);
+  opacity: 0;
+  z-index: 1;
+  border: dotted 2px rgba(98, 114, 164, 1);
+}
+
+.splitpanes__splitter:hover::before {
+  opacity: 1;
+}
+
+.splitpanes--vertical > .splitpanes__splitter::before {
+  left: -5px;
+  right: -5px;
+  height: 100%;
+}
+
+.splitpanes--horizontal > .splitpanes__splitter::before {
+  top: -5px;
+  bottom: -5px;
+  width: 100%;
+}

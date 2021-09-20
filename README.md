@@ -1,12 +1,14 @@
-# EAGLE IDE
+# EAGLE IDE [![Codacy Badge](https://api.codacy.com/project/badge/Grade/26e36b4144c1415e93d3ee398a785e05)](https://app.codacy.com/gh/danielmeloalencar/eagle-ide?utm_source=github.com&utm_medium=referral&utm_content=danielmeloalencar/eagle-ide&utm_campaign=Badge_Grade_Settings)
+
+
 
 <!---Esses são exemplos. Veja https://shields.io para outras pessoas ou para personalizar este conjunto de escudos. Você pode querer incluir dependências, status do projeto e informações de licença aqui--->
 
 ![GitHub repo size](https://img.shields.io/github/repo-size/danielmeloalencar/eagle-ide?style=for-the-badge)
 ![GitHub language count](https://img.shields.io/github/languages/count/danielmeloalencar/eagle-ide?style=for-the-badge)
 ![GitHub forks](https://img.shields.io/github/forks/danielmeloalencar/eagle-ide?style=for-the-badge)
-![Bitbucket open issues](https://img.shields.io/bitbucket/issues/danielmeloalencar/eagle-ide?style=for-the-badge)
-![Bitbucket open pull requests](https://img.shields.io/bitbucket/pr-raw/danielmeloalencar/eagle-ide?style=for-the-badge)
+
+
 
 <img src="screenshot.jpg" alt="exemplo imagem">
 
