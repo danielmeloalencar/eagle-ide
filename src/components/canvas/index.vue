@@ -94,7 +94,11 @@ export default {
 <style scoped>
 #container {
   height: 90%;
-  background-color: rgb(80, 78, 78);
+  background-color: rgb(78, 78, 78);
+  background-image: url("../../assets/background.png");
+  background-repeat: repeat;
+  background-position: center;
+  background-blend-mode: overlay;
   width: 100%;
   overflow: hidden;
   border: 1px dotted rgb(80, 78, 78);
@@ -112,8 +116,8 @@ export default {
   color: black;
   position: relative;
   border-radius: 20px;
-  -webkit-box-shadow: 5px 5px 18px 5px rgba(0, 0, 0, 0.35);
-  box-shadow: 5px 5px 18px 5px rgba(0, 0, 0, 0.35);
+  -webkit-box-shadow: 5px 5px 18px 5px rgba(0, 0, 0, 0.541);
+  box-shadow: 5px 5px 18px 5px rgba(0, 0, 0, 0.507);
 }
 
 .movel {
