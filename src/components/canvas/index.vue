@@ -50,7 +50,7 @@ export default {
     };
   },
   methods: {
-    handleCanvasClick: function () {
+    handleCanvasClick: function() {
       alert("CARREGA PROPRIEDADES DO CANVAS");
     },
 
@@ -72,6 +72,7 @@ export default {
   mounted: function() {
     this.panzoom = Panzoom(document.getElementById("canvas"), {
       maxScale: 5,
+      minScale: 1,
       panOnlyWhenZoomed: false,
       excludeClass: "movel",
       cursor: "grab",
@@ -107,9 +108,12 @@ export default {
   background-color: #fff;
   width: 40%;
   overflow: hidden;
-  border: 1px dotted rgb(80, 78, 78);
+  border: 1px solid rgb(80, 78, 78);
   color: black;
   position: relative;
+  border-radius: 20px;
+  -webkit-box-shadow: 5px 5px 18px 5px rgba(0, 0, 0, 0.35);
+  box-shadow: 5px 5px 18px 5px rgba(0, 0, 0, 0.35);
 }
 
 .movel {
