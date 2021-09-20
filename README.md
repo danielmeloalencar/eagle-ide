@@ -1,15 +1,19 @@
 # EAGLE IDE [![Codacy Badge](https://api.codacy.com/project/badge/Grade/26e36b4144c1415e93d3ee398a785e05)](https://app.codacy.com/gh/danielmeloalencar/eagle-ide?utm_source=github.com&utm_medium=referral&utm_content=danielmeloalencar/eagle-ide&utm_campaign=Badge_Grade_Settings)
 
+<!---Esses são exemplos. Veja https://shields.io para outras pessoas ou para personalizar este conjunto de escudos. Você pode querer incluir dependências, status do projeto e informações de licença aqui--->
+
+
 ![GitHub repo size](https://img.shields.io/github/repo-size/danielmeloalencar/eagle-ide?style=for-the-badge)
 ![GitHub language count](https://img.shields.io/github/languages/count/danielmeloalencar/eagle-ide?style=for-the-badge)
 ![GitHub forks](https://img.shields.io/github/forks/danielmeloalencar/eagle-ide?style=for-the-badge)
+
+
 
 <img src="screenshot.jpg" alt="exemplo imagem">
 
 > IDE Visual Para React Native com posicionamento absoluto de componentes de forma responsiva.
 
 > Visual IDE For React Native with Responsive Absolute Component Placement
-
 ### Ajustes e melhorias
 
 O projeto ainda está em desenvolvimento e as próximas atualizações serão voltadas nas seguintes tarefas:
@@ -21,24 +25,24 @@ O projeto ainda está em desenvolvimento e as próximas atualizações serão vo
 - [ ] Paleta de Componentes (Básica)
 - [ ] Editor de Propriedades
 
+
 ## 💻 Pré-requisitos
 
 Antes de começar, verifique se você atendeu aos seguintes requisitos:
-
 <!---Estes são apenas requisitos de exemplo. Adicionar, duplicar ou remover conforme necessário--->
+* `Node`
+* `Git`
 
-- `Node`
-- `Git`
 
 ## 🚀 Instalando EAGLE IDE
 
 Para instalar o Eagle IDE, siga estas etapas:
 
 Windows / Linux:
+```
+$ npm install 
+```
 
-```
-$ npm install
-```
 
 ## ☕ Rodando o Eagle IDE
 
@@ -55,9 +59,7 @@ npm run electron:build
 ```
 
 ## 📫 Contribuindo para Eagle IDE
-
 <!---Se o seu README for longo ou se você tiver algum processo ou etapas específicas que deseja que os contribuidores sigam, considere a criação de um arquivo CONTRIBUTING.md separado--->
-
 Para contribuir com Eagle IDE, siga estas etapas:
 
 1. Bifurque este repositório.
@@ -85,6 +87,8 @@ Agradecemos às seguintes pessoas que contribuíram para este projeto:
   </tr>
 </table>
 
+
 ## 😄 Seja um dos contribuidores<br>
 
 Quer fazer parte desse projeto? Envie um email para danielmalencar2011@gmail.com.
+
