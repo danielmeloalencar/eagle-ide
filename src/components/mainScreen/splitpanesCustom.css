@@ -7,6 +7,7 @@
   background-color: #6272a4;
   position: relative;
 }
+
 .splitpanes__splitter:before {
   content: "";
   position: absolute;
@@ -18,14 +19,17 @@
   z-index: 1;
   border: dotted 2px rgba(98, 114, 164, 1);
 }
+
 .splitpanes__splitter:hover:before {
   opacity: 1;
 }
+
 .splitpanes--vertical > .splitpanes__splitter:before {
   left: -5px;
   right: -5px;
   height: 100%;
 }
+
 .splitpanes--horizontal > .splitpanes__splitter:before {
   top: -5px;
   bottom: -5px;
