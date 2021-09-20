@@ -1,7 +1,17 @@
 <template>
-  <div class="container" @click.self="handleCanvasClick" @mousewheel=" (event) => { (event.deltaY < 0) ? zoom(1):zoom(-1)}">
-    <div class="canvas" id="canvas">
-      <vue-draggable-resizable class="movel"
+  <div
+    ref="container"
+    id="container"
+    @click.self="handleCanvasClick"
+    @mousewheel="
+      (event) => {
+        event.deltaY < 0 ? zoom(1) : zoom(-1);
+      }
+    "
+  >
+    <div id="canvas" ref="canvas" ke>
+      <vue-draggable-resizable
+        class="movel"
         :x="0"
         :y="0"
         :w="300"
@@ -10,7 +20,8 @@
         @resizing="onResize"
         :parent="false"
         :grid="[1, 1]"
-        active>
+        active
+      >
         <p>
           Eu sou um componente móvel<br /><br /><br />
           X: {{ x }} / Y: {{ y }} - Largura: {{ width }} / Altura: {{ height }}
@@ -30,7 +41,7 @@ export default {
     VueDraggableResizable,
   },
 
-  data: function () {
+  data: function() {
     return {
       width: 0,
       height: 0,
@@ -39,37 +50,48 @@ export default {
     };
   },
   methods: {
-    handleCanvasClick: function () {
-      console.log("CARREGA PROPRIEDADES DO CANVAS");
+    handleCanvasClick: function() {
+      alert("CARREGA PROPRIEDADES DO CANVAS");
     },
-    
-    onResize: function (x, y, width, height) {
+
+    onResize: function(x, y, width, height) {
       this.x = x;
       this.y = y;
       this.width = width;
       this.height = height;
     },
-    onDrag: function (x, y) {
+    onDrag: function(x, y) {
       this.x = x;
       this.y = y;
     },
 
-      zoom(level){
-            level === -1 ? this.panzoom.zoomOut() : this.panzoom.zoomIn()
-        }
+    zoom(level) {
+      level === -1 ? this.panzoom.zoomOut() : this.panzoom.zoomIn();
+    },
   },
-  mounted: function () {
+  mounted: function() {
     this.panzoom = Panzoom(document.getElementById("canvas"), {
       maxScale: 5,
-      panOnlyWhenZoomed:false,
-      excludeClass:'movel'
+      panOnlyWhenZoomed: false,
+      excludeClass: "movel",
+      cursor: "grab",
     });
+
+    //Posiciona o canvas no centro do container
+    setTimeout(() =>
+      this.panzoom.pan(
+        this.$refs.container.clientWidth / 2 -
+          this.$refs.canvas.clientWidth / 2,
+        50
+      )
+    );
+    //this.$refs.container.clientHeight
   },
 };
 </script>
 
 <style scoped>
-.container {
+#container {
   height: 90%;
   background-color: rgb(80, 78, 78);
   width: 100%;
@@ -79,7 +101,8 @@ export default {
   position: relative;
   overflow: scroll;
 }
-.canvas {
+
+#canvas {
   height: 120%;
   background-color: #fff;
   width: 40%;
@@ -87,5 +110,9 @@ export default {
   border: 1px dotted rgb(80, 78, 78);
   color: black;
   position: relative;
+}
+
+.movel {
+  cursor: move;
 }
 </style>
