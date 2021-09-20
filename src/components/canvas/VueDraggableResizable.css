@@ -67,8 +67,9 @@
   cursor: se-resize;
   border-radius: 50%;
 }
+
 @media only screen and (max-width: 768px) {
-  [class*="handle-"]:before {
+  [class*="handle-"]::before {
     content: "";
     left: -10px;
     right: -10px;
