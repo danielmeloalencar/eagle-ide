@@ -9,7 +9,9 @@
       }
     "
   >
+
     <div id="canvas" ref="canvas" ke>
+    
       <vue-draggable-resizable
         class="movel"
         :x="0"
@@ -36,9 +38,11 @@ import VueDraggableResizable from "vue-draggable-resizable";
 import "./VueDraggableResizable.css";
 import Panzoom from "@panzoom/panzoom"; // Docs https://github.com/timmywil/panzoom
 
+//import {RNView, RNButton} from "../componentPalette";
+
 export default {
   components: {
-    VueDraggableResizable,
+    VueDraggableResizable
   },
 
   data: function() {
