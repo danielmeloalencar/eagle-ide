@@ -40,9 +40,11 @@ export default {
 
 .box-conteudo {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
+    flex-direction: column;
     padding: 10px;
     justify-content: center;
+    overflow-y: auto;
 
 }
 </style>

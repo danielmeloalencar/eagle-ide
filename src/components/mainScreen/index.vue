@@ -26,8 +26,8 @@
           </splitpanes>
         </pane>
         <pane min-size="5" size="65" class="canvas-container noselect">
-          <Canvas v-if="activeTab == 0" />
-          <Editor v-if="activeTab == 1" />
+          <Canvas v-show="activeTab == 0"/>
+          <Editor v-show="activeTab == 1" />
           <div
             style="
               height: 5%;
@@ -64,7 +64,8 @@
         </pane>
         <pane min-size="5" max-size="20" size="15">
           <Box titulo="Components">
-            <button style="flex:1"> Componente Teste </button>
+            <button class="btn-add-component" @click="addComponent('View')">View </button>
+            <button class="btn-add-component" @click="addComponent('Button')">Button </button>
           </Box>
         </pane>
       </splitpanes>
@@ -87,6 +88,8 @@ import "../../utils/css-utils.css";
 import Box from "../box";
 import Canvas from "../canvas";
 import Editor from "../codeEditor";
+
+
 export default {
   name: "mainScreen",
   components: {
@@ -94,13 +97,18 @@ export default {
     Pane,
     Box,
     Canvas,
-    Editor,
+    Editor
   },
   data() {
     return {
       activeTab: 0,
     };
   },
+  methods:{
+    addComponent: function(tipo){
+       this.$root.$emit('addComponent',tipo)
+    },
+  }
 };
 </script>
 
@@ -165,5 +173,30 @@ export default {
 .tab.active {
   color: #bd93f9;
   font-weight: bold;
+}
+
+.btn-add-component {
+  flex: 1;
+  align-items: center;
+  display: flex;
+  border: solid 1px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.btn-add-component:focus {
+  outline:0;
+}
+
+.btn-add-component {
+  background-color: #636363;
+  color: #FFF;
+  border: none;
+  margin-top: 2px;
+}
+
+.btn-add-component:hover {
+  background-color: #bd93f9;
+  color: #FFF;
 }
 </style>
