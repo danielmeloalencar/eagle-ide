@@ -1,11 +1,24 @@
-import Vue from 'vue'
-import App from './App.vue'
-import store from './store'
+import Vue from "vue";
+import App from "./App.vue";
+import store from "./store";
+import router from "./router";
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
 
+Vue.use(VueRouter);
 
+/*Handle navigation duplication for router push (Globally)*/
+import VueRouter from "vue-router";
+const originalPush = VueRouter.prototype.push;
+VueRouter.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch((error) => {
+    console.log(error);
+  });
+};
+
+/***********************************************************/
 new Vue({
   store,
-  render: h => h(App)
-}).$mount('#app')
+  router,
+  render: (h) => h(App),
+}).$mount("#app");
