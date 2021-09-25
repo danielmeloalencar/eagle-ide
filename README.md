@@ -9,7 +9,7 @@
 
 
 
-<img src="screenshot.jpg" alt="exemplo imagem">
+<img src="screenshot_25_09.jpg" alt="exemplo imagem">
 
 > IDE Visual Para React Native com posicionamento absoluto de componentes de forma responsiva.
 
