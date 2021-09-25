@@ -1,8 +1,12 @@
-import { app, protocol, BrowserWindow, Menu } from "electron";
+import { app, protocol, BrowserWindow, Menu, dialog, remote } from "electron";
 import { createProtocol } from "vue-cli-plugin-electron-builder/lib";
 import installExtension, { VUEJS_DEVTOOLS } from "electron-devtools-installer";
 const isDevelopment = process.env.NODE_ENV !== "production";
+require('@electron/remote/main').initialize()
+
+import "./backend";
 Menu.setApplicationMenu(false);
+
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([
   { scheme: 'app', privileges: { secure: true, standard: true } }
@@ -18,17 +22,23 @@ async function createWindow() {
 
       // Use pluginOptions.nodeIntegration, leave this alone
       // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
+      enableRemoteModule: true,
       nodeIntegration: true,
       contextIsolation: false
+
     }
   })
+
+  require("@electron/remote/main").enable(win.webContents);
 
   win.maximize();
 
   win.webContents.on("did-finish-load", () => {
     const { title, version } = require('../package.json');
     win.setTitle(`${title} V.${version} `);
+    
   })
+
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode
@@ -41,7 +51,6 @@ async function createWindow() {
 
   }
 }
-
 
 // Quit when all windows are closed.
 app.on("window-all-closed", () => {

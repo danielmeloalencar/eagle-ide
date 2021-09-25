@@ -25,7 +25,7 @@ export default {
 .box {
     display: flex;
     flex-direction: column;
-    justify-content: start;
+    justify-content: flex-start;
     height: 100%;
 }
 

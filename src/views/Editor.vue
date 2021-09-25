@@ -1,11 +1,14 @@
 <template>
 <splitpanes horizontal :push-other-panes="true" style="height: 100vh;margin:0px padding:0px;overflow:hidden;">
-    <pane min-size="5" size="5" max-size="5" style="display: flex">
-        <div style="display: flex; flex: 1">
+    <pane min-size="10" size="10" max-size="10" style="display: flex">
+        <div style="display: flex; flex: 1" class="noselect">
             <div class="logo-container">
+                <img src="@/assets/logo.png" width="50">
                 <span class="logo">EagleIDE</span>
             </div>
-            <div class="menu-container">Menu começa aqui</div>
+            <div class="menu-container">{{projectName}}</div>
+            <button class="btnSaveProject" @click="saveProject()">Save Project</button>
+            <button class="btnCloseProject" @click="closeProject()">Close Project</button>
         </div>
     </pane>
     <pane>
@@ -49,10 +52,16 @@
                     </div>
                 </div>
             </pane>
-            <pane min-size="5" max-size="20" size="15">
+
+            <pane min-size="3" max-size="20" size="15" class="noselect">
                 <Box titulo="Components">
                     <button class="btn-add-component" @click="addComponent('View')">View </button>
                     <button class="btn-add-component" @click="addComponent('Button')">Button </button>
+                </Box>
+            </pane>
+            <pane min-size="3" size="10">
+                <Box titulo="Pages">
+                    <button v-for="(page,index) in pages" :key="index" class="btn-select-page">{{page.name}}</button>
                 </Box>
             </pane>
         </splitpanes>
@@ -72,12 +81,16 @@ import {
     Pane
 } from "splitpanes";
 import "splitpanes/dist/splitpanes.css";
-import "./splitpanesCustom.css";
-import "../../utils/css-utils.css";
+import "../splitpanesCustom.css";
+import "../utils/css-utils.css";
 
-import Box from "../box";
-import Canvas from "../canvas";
-import Editor from "../codeEditor";
+import Box from "../components/box";
+import Canvas from "../components/canvas";
+import Editor from "../components/codeEditor";
+const {
+    ipcRenderer
+} = window.require("electron");
+import store from "@/store";
 
 export default {
     name: "mainScreen",
@@ -91,25 +104,55 @@ export default {
     data() {
         return {
             activeTab: 0,
+
         };
     },
+
+    computed: {
+        projectName: function () {
+            return this.$store.state.project.projectName
+        },
+        pages() {
+            return this.$store.state.project.pages
+        }
+
+    },
+
     methods: {
-        addComponent: function (tipo) {
+        addComponent(tipo) {
             this.$root.$emit('addComponent', tipo)
         },
+        closeProject() {
+            this.$router.push({
+                name: 'Home'
+            })
+            //Limpa State
+            store.replaceState({
+                grid: {
+                    x: 1,
+                    y: 1
+                },
+                selectedComponent: null,
+                activePage: null,
+            })
+        },
+        saveProject() {
+            ipcRenderer.on("error", (e, err) => {
+                alert(err)
+            });
+            ipcRenderer.send("save-project", store.state.project);
+
+            ipcRenderer.on("project-saved", () => {
+                alert("Projeto Salvo!")
+            });
+        },
+
     }
+
 };
 </script>
 
 <style>
-#app {
-    font-family: Avenir, Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    margin-top: 60px;
-}
-
 .logo-container {
     display: flex;
     margin-right: 10px;
@@ -122,15 +165,14 @@ export default {
     font-style: italic;
     font-size: 1.3rem;
     font-weight: bolder;
-    text-align: left;
-    color: #807f7f;
+    color: #bd93f9;
 }
 
 .menu-container {
     display: flex;
     flex: 1;
     align-items: center;
-    justify-content: start;
+    justify-content: center;
 }
 
 .console {
@@ -157,20 +199,12 @@ export default {
     font-size: 12px;
     padding: 5px;
     color: #bd93f983;
+
 }
 
 .tab.active {
     color: #bd93f9;
     font-weight: bold;
-}
-
-.btn-add-component {
-    flex: 1;
-    align-items: center;
-    display: flex;
-    border: solid 1px;
-    cursor: pointer;
-    width: 100%;
 }
 
 .btn-add-component:focus {
@@ -182,10 +216,57 @@ export default {
     color: #FFF;
     border: none;
     margin-top: 2px;
+    flex: 1;
+    align-items: center;
+    display: flex;
+    cursor: pointer;
+    overflow: hidden;
+    width: 100%;
 }
 
 .btn-add-component:hover {
     background-color: #bd93f9;
     color: #FFF;
+}
+
+.btn-select-page {
+    background-color: #636363;
+    color: #FFF;
+    border: none;
+    margin-top: 2px;
+    flex: 1;
+    align-items: center;
+    display: flex;
+    cursor: pointer;
+    overflow: hidden;
+    width: 100%;
+}
+
+.btnCloseProject {
+    margin: 15px;
+    background-color: #604c7c;
+    color: #FFF;
+    border: none;
+    cursor: pointer;
+    margin-right: 5px;
+    margin-left: 5px;
+    border-radius: 5px;
+
+}
+
+.btnCloseProject:hover,
+.btnSaveProject:hover {
+    background-color: #bd93f9;
+}
+
+.btnSaveProject {
+    margin: 15px;
+    background-color: #604c7c;
+    color: #FFF;
+    border: none;
+    cursor: pointer;
+    margin-right: 2px;
+    border-radius: 5px;
+
 }
 </style>
