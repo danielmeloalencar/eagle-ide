@@ -15,8 +15,10 @@
         <splitpanes :push-other-panes="false">
             <pane min-size="5" size="20" max-size="20">
                 <splitpanes horizontal :push-other-panes="false">
-                    <pane min-size="5">
-                        <Box titulo="Layers"> </Box>
+                    <pane min-size="5" style="height:100%;">
+                        <Box titulo="Layers">
+                           <Layers/> 
+                             </Box>
                     </pane>
                     <pane min-size="5">
                         <Box titulo="Properties">
@@ -87,6 +89,7 @@ import "../utils/css-utils.css";
 import Box from "../components/box";
 import Canvas from "../components/canvas";
 import Editor from "../components/codeEditor";
+import Layers from "../components/layers";
 const {
     ipcRenderer
 } = window.require("electron");
@@ -99,7 +102,8 @@ export default {
         Pane,
         Box,
         Canvas,
-        Editor
+        Editor,
+        Layers
     },
     data() {
         return {
@@ -216,8 +220,6 @@ export default {
     color: #FFF;
     border: none;
     margin-top: 2px;
-    flex: 1;
-    align-items: center;
     display: flex;
     cursor: pointer;
     overflow: hidden;
@@ -234,12 +236,14 @@ export default {
     color: #FFF;
     border: none;
     margin-top: 2px;
-    flex: 1;
-    align-items: center;
-    display: flex;
     cursor: pointer;
     overflow: hidden;
     width: 100%;
+    outline: none;
+}
+.btn-select-page:hover {
+background-color: #bd93f9;
+    color: #FFF;
 }
 
 .btnCloseProject {
