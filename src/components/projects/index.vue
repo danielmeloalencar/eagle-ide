@@ -75,7 +75,7 @@ export default {
 .container {
   display: flex;
   width: 100vh;
-  border: 1px solid rgba(235, 78, 78, 0.247);
+  border: 1px solid #6c3caf;
   padding: 5px;
   margin: 30px;
   border-radius: 10px;
@@ -88,18 +88,18 @@ export default {
   align-items: center;
   width: 150px;
   height: 50px;
-  border: 1px solid rgb(235, 78, 78);
+  border: 1px solid  #874add;
   border-radius: 10px;
   padding: 5px;
   cursor: pointer;
-  background-color: rgb(235, 78, 78);
-  color: rgb(43, 43, 43);
+  background-color:  #874add;
+  color: #FFFFFF;
   font-size: 14px;
   margin: 10px;
 }
 
 .newProject:hover {
   border: 1px solid rgb(206, 171, 171);
-  color: #fff;
+  color: rgb(205, 119, 255);
 }
 </style>
