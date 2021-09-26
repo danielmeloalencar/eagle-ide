@@ -1,22 +1,22 @@
 <template>
-  <div id="app">
-    <router-view/>
-  </div>
+<div id="app">
+    <router-view />
+</div>
 </template>
 
 <script>
 import "./utils/css-utils.css";
 
-export default { 
- 
+export default {
+
 }
 </script>
-<style >
 
-body{
-background-color: #21222c;
-padding: 0px;
-margin: 0px;
+<style>
+body {
+    background-color: #21222c;
+    padding: 0px;
+    margin: 0px;
 }
 
 #app {

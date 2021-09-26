@@ -25,7 +25,7 @@ export default {
 .box {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: flex-start!;
     height: 100%;
 }
 
@@ -39,11 +39,12 @@ export default {
 }
 
 .box-conteudo {
+    flex:1 ;
     display: flex;
     align-items: center;
     flex-direction: column;
     padding: 10px;
-    justify-content: center;
+    justify-content: flex-start;
     overflow-y: auto;
 
 }
