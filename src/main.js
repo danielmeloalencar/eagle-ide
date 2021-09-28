@@ -2,10 +2,10 @@ import Vue from "vue";
 import App from "./App.vue";
 import store from "./store";
 import router from "./router";
-import VueDragTree from 'vue-drag-tree'
+import VueDragTree from "vue-drag-tree";
+import "vue-drag-tree/dist/vue-drag-tree.min.css";
 
-
-Vue.use(VueDragTree)
+Vue.use(VueDragTree);
 Vue.config.productionTip = false;
 
 Vue.use(VueRouter);

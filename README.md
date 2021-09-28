@@ -22,7 +22,7 @@ O projeto ainda está em desenvolvimento e as próximas atualizações serão vo
 - [x] Layout
 - [x] Canvas Pan/Zoom
 - [x] Mover/Redimensionar em runtime
-- [ ] Paleta de Componentes (Básica)
+- [x] Layers 
 - [ ] Editor de Propriedades
 
 
