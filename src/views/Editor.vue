@@ -17,8 +17,8 @@
                 <splitpanes horizontal :push-other-panes="false">
                     <pane min-size="5" style="height:100%;">
                         <Box titulo="Layers">
-                           <Layers/> 
-                             </Box>
+                            <Layers />
+                        </Box>
                     </pane>
                     <pane min-size="5">
                         <Box titulo="Properties">
@@ -27,7 +27,7 @@
                 </splitpanes>
             </pane>
             <pane min-size="5" size="65" class="canvas-container noselect">
-                <Canvas v-show="activeTab == 0" />
+                <Canvas v-show="activeTab == 0" ref="canvas" />
                 <Editor v-show="activeTab == 1" />
                 <div style="
               height: 5%;
@@ -90,6 +90,7 @@ import Box from "../components/box";
 import Canvas from "../components/canvas";
 import Editor from "../components/codeEditor";
 import Layers from "../components/layers";
+import eventBus from "@/event-bus";
 const {
     ipcRenderer
 } = window.require("electron");
@@ -108,10 +109,11 @@ export default {
     data() {
         return {
             activeTab: 0,
-
         };
     },
+    mounted() {
 
+    },
     computed: {
         projectName: function () {
             return this.$store.state.project.projectName
@@ -124,7 +126,7 @@ export default {
 
     methods: {
         addComponent(tipo) {
-            this.$root.$emit('addComponent', tipo)
+            eventBus.$emit('addComponent', tipo)
         },
         closeProject() {
             this.$router.push({
@@ -137,7 +139,7 @@ export default {
                     y: 1
                 },
                 selectedComponent: null,
-                activePage: null,
+                activePage: 0,
             })
         },
         saveProject() {
@@ -241,8 +243,9 @@ export default {
     width: 100%;
     outline: none;
 }
+
 .btn-select-page:hover {
-background-color: #bd93f9;
+    background-color: #bd93f9;
     color: #FFF;
 }
 

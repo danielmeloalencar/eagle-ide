@@ -20,6 +20,8 @@ import {
     RNView,
     RNButton
 } from "../componentPalette";
+import store from "@/store";
+import eventBus from "@/event-bus";
 
 const RNButtonClass = Vue.extend(RNButton);
 const RNViewClass = Vue.extend(RNView);
@@ -57,27 +59,100 @@ export default {
         zoom(level) {
             level === -1 ? this.panzoom.zoomOut() : this.panzoom.zoomIn();
         },
+        makeid(length) {
+            var result = '';
+            var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            var charactersLength = characters.length;
+            for (var i = 0; i < length; i++) {
+                result += characters.charAt(Math.floor(Math.random() *
+                    charactersLength));
+            }
+            return result;
+        },
+
+        conta(tipo) {
+            function findValues(obj, key) {
+                return findValuesHelper(obj, key, []);
+            }
+
+            function findValuesHelper(obj, key, list) {
+                if (!obj) return list;
+                if (obj instanceof Array) {
+                    for (var i in obj) {
+                        list = list.concat(findValuesHelper(obj[i], key, []));
+                    }
+                    return list;
+                }
+                if (obj[key]) list.push(obj[key]);
+
+                if ((typeof obj == "object") && (obj !== null)) {
+                    var children = Object.keys(obj);
+                    if (children.length > 0) {
+                        for (i = 0; i < children.length; i++) {
+                            list = list.concat(findValuesHelper(obj[children[i]], key, []));
+                        }
+                    }
+                }
+                return list;
+            }
+
+            let encontrados = findValues(store.state.project.pages[store.state.activePage].components, "type")
+            return encontrados.filter(x => x == tipo).length + 1
+        }
+
     },
 
+    beforeDestroy() {
+        // Remove all listening events. When this component is referenced multiple times, all referenced listeners are removed
+        eventBus.$off("addComponent");
+
+    },
     mounted: function () {
+
         //Handle add components
-        this.$root.$on('addComponent', tipo => {
+        eventBus.$on('addComponent', tipo => {
             let instance = null;
+            var obj = {}
+            var id = tipo + "_" + this.conta(tipo)
+            obj = {
+                type: tipo,
+                name: id,
+                id: id,
+                children: null,
+                active: false,
+            };
+
             switch (tipo) {
                 case 'View':
-                    instance = new RNViewClass()
+                    instance = new RNViewClass({
+                        propsData: {
+                            name: obj.name
+                        }
+                    })
+
                     instance.$mount() // pass nothing
-                    this.$refs.canvas.appendChild(instance.$el)
+                    document.getElementById("canvas").appendChild(instance.$el)
                     break;
                 case 'Button':
-                    instance = new RNButtonClass()
+                    //ex: button_1562387624
+
+                    instance = new RNButtonClass({
+                        propsData: {
+                            name: obj.name
+                        }
+                    })
                     instance.$mount() // pass nothing
-                    this.$refs.canvas.appendChild(instance.$el)
+                    //console.log(store.state.project.pages[store.state.activePage].components.find(x => x.name === tipo + '_' + id))
+                    //store.dispatch('getComponentByName',{project: "DANIEL"});
+
                     break;
 
                 default:
                     break;
             }
+
+            document.getElementById("canvas").appendChild(instance.$el)
+            store.state.project.pages[store.state.activePage].components.push(obj);
         });
 
         this.panzoom = Panzoom(document.getElementById("canvas"), {
