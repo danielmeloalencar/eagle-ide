@@ -1,11 +1,12 @@
 <template>
 <div class="container">
     <template v-if="component">
-        <div v-show="component.type ==='Button'">
+        <div v-show="component.type ==='Button'" :key="'Button_'+component.name">
             <ButtonPop :component="component" />
         </div>
 
-         <div v-show="component.type ==='View'">
+        <div v-show="component.type ==='View'" :key="'View_'+component.name">
+            <!--key é apenas para forçar a renderização, evitando que Component fique sempre igual -->
             <ViewPop :component="component" />
         </div>
     </template>
@@ -81,29 +82,5 @@ export default {
     flex: 1;
     justify-content: space-between;
 
-}
-
-.field {
-    flex: 1;
-    font-weight: 700;
-    font-size: 12px;
-    border: 1px solid rgba(91, 94, 93, 0.39);
-    align-items: center;
-    padding-left: 2px;
-    justify-content: flex-start;
-    justify-items: center;
-    display: flex;
-
-}
-
-.value {
-    flex: 1;
-    font-size: 12px;
-    border: 1px solid rgba(91, 94, 93, 0.39);
-    align-items: center;
-    padding-left: 2px;
-    justify-content: flex-start;
-    justify-items: center;
-    display: flex;
 }
 </style>

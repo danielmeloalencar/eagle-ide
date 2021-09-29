@@ -6,10 +6,18 @@
             <div class="field">Name</div>
             <div class="value"><input :value="componentMutable.name" @change="changeProperty('name',$event)"></div>
         </div>
+        <!------------------------------------------------------------------------------->
         <div class="property">
             <div class="field">Caption</div>
             <div class="value"><input :value="componentMutable.caption" @change="changeProperty('caption',$event)"></div>
         </div>
+        <!------------------------------------------------------------------------------->
+        <div class="property">
+            <div class="field">zIndex</div>
+            <div class="value"><input type="number" :value="component.zIndex" @input="changeProperty('zIndex',$event)"></div>
+            <div class="value"><button @click="changeProperty('zIndex','')">auto</button></div>
+        </div>
+        <!------------------------------------------------------------------------------->
     </div>
 </div>
 </template>
@@ -44,7 +52,7 @@ export default {
 
 .property {
     display: flex;
-     flex-direction: row;
+    flex-direction: row;
     flex: 1;
 
 }
@@ -59,6 +67,7 @@ export default {
     justify-content: flex-start;
     justify-items: center;
     display: flex;
+    min-width: 120px;
 
 }
 
@@ -72,7 +81,12 @@ export default {
     justify-items: center;
     display: flex;
 }
-.value input{
+
+.value input {
+    width: 100%;
+}
+
+.value button {
     width: 100%;
 }
 </style>
