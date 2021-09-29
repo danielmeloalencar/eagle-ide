@@ -1,5 +1,5 @@
 <template>
-<vue-draggable-resizable class="movel" :active="active" :x="0" :y="0" :w="100" :h="100" :parent="false" :grid="[grid.x,grid.y]">
+<vue-draggable-resizable class="movel" @activated="onActivated" :active="active" :x="0" :y="0" :w="100" :h="100" :parent="false" :grid="[grid.x,grid.y]">
     <div class="container"></div>
 </vue-draggable-resizable>
 </template>
@@ -8,6 +8,7 @@
 import Component from "@/mixins/componentMixin"
 export default {
     mixins: [Component],
+    
 };
 </script>
 

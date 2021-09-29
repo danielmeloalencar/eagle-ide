@@ -113,32 +113,37 @@ export default {
         eventBus.$on('addComponent', tipo => {
             let instance = null;
             var obj = {}
-            var id = tipo + "_" + this.conta(tipo)
+            var id = tipo + this.conta(tipo)
             obj = {
                 type: tipo,
                 name: id,
                 id: id,
                 children: null,
-                active: false,
-            };
+             };
 
             switch (tipo) {
                 case 'View':
                     instance = new RNViewClass({
                         propsData: {
-                            name: obj.name
+                            properties: {
+                                name: obj.name,
+                            }
                         }
                     })
 
                     instance.$mount() // pass nothing
                     document.getElementById("canvas").appendChild(instance.$el)
+
                     break;
                 case 'Button':
-                    //ex: button_1562387624
-
+                    //obj será salvo no store, properties são para a DOM
+                    obj= {...obj, ...{caption:obj.name}}
                     instance = new RNButtonClass({
                         propsData: {
-                            name: obj.name
+                            properties: {
+                                name: obj.name,
+                                caption: obj.name
+                            }
                         }
                     })
                     instance.$mount() // pass nothing
@@ -153,6 +158,7 @@ export default {
 
             document.getElementById("canvas").appendChild(instance.$el)
             store.state.project.pages[store.state.activePage].components.push(obj);
+            eventBus.$emit("showProperties", obj.name)
         });
 
         this.panzoom = Panzoom(document.getElementById("canvas"), {

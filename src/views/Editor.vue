@@ -22,6 +22,7 @@
                     </pane>
                     <pane min-size="5">
                         <Box titulo="Properties">
+                        <PropertiesEditor/>
                         </Box>
                     </pane>
                 </splitpanes>
@@ -86,10 +87,11 @@ import "splitpanes/dist/splitpanes.css";
 import "../splitpanesCustom.css";
 import "../utils/css-utils.css";
 
-import Box from "../components/box";
-import Canvas from "../components/canvas";
-import Editor from "../components/codeEditor";
-import Layers from "../components/layers";
+import Box from "@/components/box";
+import Canvas from "@/components/canvas";
+import Editor from "@/components/codeEditor";
+import Layers from "@/components/layers";
+import PropertiesEditor from "@/components/propertiesEditor";
 import eventBus from "@/event-bus";
 const {
     ipcRenderer
@@ -104,7 +106,8 @@ export default {
         Box,
         Canvas,
         Editor,
-        Layers
+        Layers,
+        PropertiesEditor
     },
     data() {
         return {

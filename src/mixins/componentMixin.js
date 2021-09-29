@@ -4,7 +4,9 @@ import store from "@/store";
 import eventBus from "@/event-bus";
 export default {
   props: {
-    name: String,
+    properties: {
+      name: String,
+    },
   },
 
   /*  watch: {
@@ -40,12 +42,25 @@ export default {
       this.width = width;
       this.height = height;
     },
-    onDrag: function() {},
+    onActivated() {
+      eventBus.$emit("showProperties", this.properties.name);
+    },
   },
 
   mounted() {
     eventBus.$on("componentSelected", (name) => {
-      this.active = name == this.name;
+      this.active = name == this.properties.name;
+    });
+
+    eventBus.$on("setProperty", (data) => {
+      console.log(data);
+      //Verifica se é para este componente
+      if (data.name == this.properties.name) {
+        const { properties } = data;
+        const currentProperties = this.properties;
+        this.properties = { ...currentProperties, ...properties };
+        console.log(this.properties);
+      }
     });
     // console.log(this.grid)
   },
