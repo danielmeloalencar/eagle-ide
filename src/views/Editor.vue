@@ -15,14 +15,14 @@
         <splitpanes :push-other-panes="false">
             <pane min-size="5" size="20" max-size="20">
                 <splitpanes horizontal :push-other-panes="false">
-                    <pane min-size="5" style="height:100%;">
+                    <pane min-size="5">
                         <Box titulo="Layers">
                             <Layers />
                         </Box>
                     </pane>
                     <pane min-size="5">
                         <Box titulo="Properties">
-                        <PropertiesEditor/>
+                            <PropertiesEditor />
                         </Box>
                     </pane>
                 </splitpanes>

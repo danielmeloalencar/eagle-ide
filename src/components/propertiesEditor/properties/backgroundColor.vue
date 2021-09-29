@@ -1,49 +1,19 @@
 <template>
-<div class="container">
-    <div class="component-type">Type: {{component.type}}</div>
-    <div class="properties">
-       <Name :component="component"/>
-       <BackgroundColor :component="component" />
-       <ZIndex :component="component" />
-    </div>
-</div>
+        <div class="property">
+            <div class="field">BackgroundColor</div>
+            <div class="value"><input type="color" :value="component.backgroundColor" @input="changeProperty('backgroundColor',$event)"></div>
+            <div class="value"><button @click="changeProperty('backgroundColor','transparent')">none</button></div>
+        </div>
 </template>
 
 <script>
 import propertiesEditorMixin from "@/mixins/propertiesEditorMixin";
-import Name from "@/components/propertiesEditor/properties/name.vue"
-import BackgroundColor from "@/components/propertiesEditor/properties/backgroundColor.vue"
-import ZIndex from "@/components/propertiesEditor/properties/zIndex.vue"
 export default {
     mixins: [propertiesEditorMixin],
-    components:{
-        Name,
-        BackgroundColor,
-        ZIndex
-    }
-
 }
 </script>
 
 <style scoped>
-.container {
-    flex: 1;
-    align-self: stretch;
-}
-
-.component-type {
-    color: rgb(143, 143, 143);
-    font-size: 13px;
-    flex: 1;
-    align-items: center;
-
-}
-
-.properties {
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-}
 
 .property {
     display: flex;
@@ -63,6 +33,7 @@ export default {
     justify-items: center;
     display: flex;
     min-width: 120px;
+
 }
 
 .value {

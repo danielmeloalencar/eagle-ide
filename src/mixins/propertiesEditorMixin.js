@@ -13,10 +13,12 @@ export default {
 
   methods: {
     changeProperty(propName, event) {
-      let value = event.target.value;
-      var properties = {};
+      //Algumas vezes receberá um evento, outras vezes receberá uma string
 
-      {
+      let value = event.target ? event.target.value : event;
+      var properties = {};
+      
+        {
         //TODO verificar nome antes de alterar, não permitir espaço nem nomes repetidos
         if (propName == "name") {
           //Remove espaço em branco
