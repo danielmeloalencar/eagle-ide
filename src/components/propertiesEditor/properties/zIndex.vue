@@ -1,7 +1,7 @@
 <template>
     <div class="property">
             <div class="field">zIndex</div>
-            <div class="value"><input type="number" :value="component.zIndex" @input="changeProperty('zIndex',$event)"></div>
+            <div class="value"><input type="number" :value="componentMutable.zIndex" @input="changeProperty('zIndex',$event)"></div>
             <div class="value"><button @click="changeProperty('zIndex','')">auto</button></div>
         </div>
 </template>

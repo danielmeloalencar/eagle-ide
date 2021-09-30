@@ -20,6 +20,7 @@
     "@iconscout/vue-unicons": "^0.0.3",
     "@panzoom/panzoom": "^4.4.1",
     "core-js": "^3.6.5",
+    "mount-vue-component": "^0.10.1",
     "splitpanes": "^2.3.8",
     "vue": "^2.6.11",
     "vue-drag-tree": "^1.1.9",

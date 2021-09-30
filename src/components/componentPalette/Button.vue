@@ -1,6 +1,6 @@
 <template>
-<vue-draggable-resizable :style="{zIndex:properties.zIndex}"  class="movel" @activated="onActivated" :active="active" :x="0" :y="0" :w="100" :h="100" :parent="false" :grid="[grid.x,grid.y]">
-    <button class="container">{{properties.caption}}</button>
+<vue-draggable-resizable  :name="properties.name"  :style="{zIndex:propertiesMutable.zIndex}"  class="movel" :on-drag="onDragCallback"  :on-resize="onResize"  :on-drag-start="onDragStartCallback" @activated="onActivated" :active="active" :x="propertiesMutable.x" :y="propertiesMutable.y" :w="propertiesMutable.width" :h="propertiesMutable.height"  :parent="false" :grid="[grid.x,grid.y]" :draggable="draggable">
+    <button class="container">{{propertiesMutable.caption}}</button>
 </vue-draggable-resizable>
 </template>
 

@@ -1,24 +1,70 @@
 <template>
 <div class='container-tree'>
     <div class='treeSelf'>
-        <vue-drag-tree :data='data' :allowDrag='allowDrag' :allowDrop='allowDrop' :defaultText='"New Node"' @current-node-clicked='curNodeClicked' @drag="dragHandler" @drag-enter="dragEnterHandler" @drag-leave="dragLeaveHandler" @drag-over="dragOverHandler" @drag-end="dragEndHandler" @drop="dropHandler" :disableDBClick='true' expand-all>
+        <vue-drag-tree :data='data' :allowDrag='allowDrag' :allowDrop='allowDrop' :defaultText='"New Node"' @current-node-clicked='curNodeClicked' @drag="dragHandler" @drag-end="dragEndHandler" @drop="dropHandler" :disableDBClick='true' expand-all>
         </vue-drag-tree>
     </div>
 </div>
 </template>
 
 <script>
-import store from "@/store";
 import eventBus from "@/event-bus";
+
 //https://github.com/shuiRong/vue-drag-tree
 export default {
     data() {
         return {
-            data: store.state.project.pages[store.state.activePage].components,
-
+            data: [],
+            dragStartComponent: null,
         }
     },
+    mounted(){
+        eventBus.$on("componentAdded",(component) =>{
+            //verificar antes se tem um component.parent, caso sim, então varrer recursivamente
+            //todos os objetos no this.data em busca do parent e fazer o push nele
+            //Caso contrário, faça o push abaixo
+           let existe = false;
+            let todosComponentesArray =this.buscaRecursiva();
+            todosComponentesArray.map((comp)=>{
+                if (component.name ==comp.name)
+                  existe=true;
+            })
+            console.log("LISTA DE LAYERS", this.buscaRecursiva())
+            if(!existe)
+             this.data.push(component)
+        })
+    },
     methods: {
+        buscaRecursiva(){
+               function findValues(obj, key) {
+                return findValuesHelper(obj, key, []);
+            }
+
+            function findValuesHelper(obj, key, list) {
+                if (!obj) return list;
+                if (obj instanceof Array) {
+                    for (var i in obj) {
+                        list = list.concat(findValuesHelper(obj[i], key, []));
+                    }
+                    return list;
+                }
+                if (obj[key]) list.push(obj);
+
+                if ((typeof obj == "object") && (obj !== null)) {
+                    var children = Object.keys(obj);
+                    if (children.length > 0) {
+                        for (i = 0; i < children.length; i++) {
+                            list = list.concat(findValuesHelper(obj[children[i]], key, []));
+                        }
+                    }
+                }
+                return list;
+            }
+
+            let encontrados = findValues(this.data, "type")
+            return encontrados;
+        },
+
         allowDrag(model, component) {
             if (model.nome === 'TESTE') {
                 console.log(component)
@@ -28,37 +74,56 @@ export default {
             // can be dragged
             return true;
         },
-        allowDrop(model, component) {
-            console.log(component)
+        allowDrop(model) {
+
+
             if (model.name === 'Node 2-2') {
                 // can't be placed
                 return false;
             }
             // can be placed
             return true;
+
         },
-        curNodeClicked(model, component) {
-            console.log(store.state.project.pages[store.state.activePage].components)
+        curNodeClicked(model) {
             eventBus.$emit("componentSelected", model.name)
-            console.log('curNodeClicked', model, component);
+
         },
-        dragHandler(model, component, e) {
-            console.log('dragHandler: ', model, component, e);
+        dragHandler(model) {
+            this.dragStartComponent = model;
+
         },
-        dragEnterHandler(model, component, e) {
-            console.log('dragEnterHandler: ', model, component, e);
+
+        dragEndHandler() {
+
         },
-        dragLeaveHandler(model, component, e) {
-            console.log('dragLeaveHandler: ', model, component, e);
-        },
-        dragOverHandler(model, component, e) {
-            console.log('dragOverHandler: ', model, component, e);
-        },
-        dragEndHandler(model, component, e) {
-            console.log('dragEndHandler: ', model, component, e);
-        },
-        dropHandler(model, component, e) {
-            console.log('dropHandler: ', model, component, e);
+
+        dropHandler(model) {
+      
+
+            var toRoot = false;
+            Object.entries(model.children).forEach(([key, value]) => {
+                console.log(key)
+                if (value.name == this.dragStartComponent.name)
+                    toRoot = true;
+            });
+
+          
+            if (toRoot==false){
+            this.dragStartComponent.parent= null;
+            eventBus.$emit("reloadComponent", {parent: null,component: this.dragStartComponent});
+            }               
+            else{
+                this.dragStartComponent.parent= model.name;
+  
+  
+              eventBus.$emit("deleteComponent", this.dragStartComponent.name);
+            console.log("ARRASTADO",this.dragStartComponent)
+              eventBus.$emit("reloadComponent",{parent: model.name,component: this.dragStartComponent});
+          
+            }
+                
+
         }
     }
 }

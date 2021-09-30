@@ -1,9 +1,8 @@
 <template>
-        <div class="property">
-            <div class="field">BackgroundColor</div>
-            <div class="value"><input type="color" :value="componentMutable.backgroundColor" @input="changeProperty('backgroundColor',$event)"></div>
-            <div class="value"><button @click="changeProperty('backgroundColor','transparent')">none</button></div>
-        </div>
+<div class="property">
+    <div class="field">Caption</div>
+    <div class="value"><input :value="componentMutable.caption" @change="changeProperty('caption',$event)"></div>
+</div>
 </template>
 
 <script>
@@ -14,7 +13,6 @@ export default {
 </script>
 
 <style scoped>
-
 .property {
     display: flex;
     flex-direction: row;

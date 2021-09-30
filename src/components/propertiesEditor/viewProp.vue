@@ -2,6 +2,9 @@
 <div class="container">
     <div class="component-type">Type: {{component.type}}</div>
     <div class="properties">
+       <Parent :component="component"/>
+       <Position :component="component" />
+       <Size :component="component" />
        <Name :component="component"/>
        <BackgroundColor :component="component" />
        <ZIndex :component="component" />
@@ -11,15 +14,21 @@
 
 <script>
 import propertiesEditorMixin from "@/mixins/propertiesEditorMixin";
+import Parent from "@/components/propertiesEditor/properties/parent.vue"
 import Name from "@/components/propertiesEditor/properties/name.vue"
 import BackgroundColor from "@/components/propertiesEditor/properties/backgroundColor.vue"
 import ZIndex from "@/components/propertiesEditor/properties/zIndex.vue"
+import Position from "@/components/propertiesEditor/properties/position.vue"
+import Size from "@/components/propertiesEditor/properties/size.vue"
 export default {
     mixins: [propertiesEditorMixin],
     components:{
+        Parent,
         Name,
         BackgroundColor,
-        ZIndex
+        ZIndex,
+        Position,
+        Size
     }
 
 }

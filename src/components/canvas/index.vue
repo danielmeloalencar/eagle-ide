@@ -54,22 +54,12 @@ export default {
             this.mostrarGrid = !this.mostrarGrid;
         },
         handleCanvasClick: function () {
+            store.state.selectedComponent = null;
             //alert("CARREGA PROPRIEDADES DO CANVAS");
         },
         zoom(level) {
             level === -1 ? this.panzoom.zoomOut() : this.panzoom.zoomIn();
         },
-        makeid(length) {
-            var result = '';
-            var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-            var charactersLength = characters.length;
-            for (var i = 0; i < length; i++) {
-                result += characters.charAt(Math.floor(Math.random() *
-                    charactersLength));
-            }
-            return result;
-        },
-
         conta(tipo) {
             function findValues(obj, key) {
                 return findValuesHelper(obj, key, []);
@@ -98,6 +88,63 @@ export default {
 
             let encontrados = findValues(store.state.project.pages[store.state.activePage].components, "type")
             return encontrados.filter(x => x == tipo).length + 1
+        },
+
+        loadComponents(pageIndex = 0) {
+            let data = store.state.project.pages[pageIndex].components;
+            return search(data);
+
+            function search(obj, parent = null) {
+                for (let i in obj) {
+                    // this.loadComponent(parent, obj[i])
+                    eventBus.$emit("loadComponent", {
+                        parent: parent,
+                        component: obj[i]
+                    })
+                    /// console.log(obj[i], parent);
+                    if (obj[i].children) {
+                        return search(obj[i].children, obj[i].name);
+                    }
+                }
+            }
+        },
+        loadComponent(parent, properties) {
+            let instance = null;
+            let tipo = properties.type;
+
+            switch (tipo) {
+                case 'View':
+                    instance = new RNViewClass({
+                        propsData: {
+                            properties
+                        }
+                    })
+
+                    instance.$mount() // pass nothing
+                    break;
+                case 'Button':
+                    //obj será salvo no store, properties são para a DOM
+
+                    instance = new RNButtonClass({
+                        propsData: {
+                            properties
+                        }
+                    })
+                    instance.$mount() // pass nothing
+                    //console.log(store.state.project.pages[store.state.activePage].components.find(x => x.name === tipo + '_' + id))
+                    //store.dispatch('getComponentByName',{project: "DANIEL"});
+
+                    break;
+
+                default:
+                    break;
+            }
+            if (parent == null)
+                document.getElementById("canvas").appendChild(instance.$el);
+            else
+                document.querySelector("[name='" + parent + "']").appendChild(instance.$el);
+            console.log(store.state.project);
+            eventBus.$emit("componentAdded", properties)
         }
 
     },
@@ -105,10 +152,41 @@ export default {
     beforeDestroy() {
         // Remove all listening events. When this component is referenced multiple times, all referenced listeners are removed
         eventBus.$off("addComponent");
-
+        eventBus.$off("loadComponents");
     },
-    mounted: function () {
+    created() {
+        //para abrir projeto
+        eventBus.$on('loadComponent', data => {
+            this.loadComponent(data.parent, data.component)
+        })
 
+        //para layers
+        eventBus.$on('reloadComponent', data => {
+            //carrega o componente
+            this.loadComponent(data.parent, data.component)
+            //se tiver filhos,carrega tambem recursivamente
+            if (data.component.children)
+                return search(data.component.children, data.component.name)
+            console.log(store.state.project.pages[store.state.activePage].components)
+
+            function search(obj, parent = null) {
+                for (let i in obj) {
+                    // this.loadComponent(parent, obj[i])
+                    eventBus.$emit("loadComponent", {
+                        parent: parent,
+                        component: obj[i]
+                    })
+                    console.log(obj[i], parent);
+                    if (obj[i].children) {
+                        return search(obj[i].children, obj[i].name);
+                    }
+                }
+            }
+        })
+    },
+
+    mounted: function () {
+        this.loadComponents();
         //Handle add components
         eventBus.$on('addComponent', tipo => {
             let instance = null;
@@ -118,32 +196,37 @@ export default {
                 type: tipo,
                 name: id,
                 id: id,
+                parent: null,
                 children: null,
-             };
+                x: 100,
+                y: 100,
+                height:100,
+                width:100,
+            };
 
             switch (tipo) {
                 case 'View':
                     instance = new RNViewClass({
                         propsData: {
-                            properties: {
-                                name: obj.name,
-                            }
+                            properties: obj
                         }
                     })
 
                     instance.$mount() // pass nothing
-                    document.getElementById("canvas").appendChild(instance.$el)
-
                     break;
                 case 'Button':
                     //obj será salvo no store, properties são para a DOM
-                    obj= {...obj, ...{caption:obj.name}}
+                    obj = {
+                        ...obj,
+                        ...{
+                            caption: obj.name,
+                            x: 100,
+                            y: 100
+                        }
+                    }
                     instance = new RNButtonClass({
                         propsData: {
-                            properties: {
-                                name: obj.name,
-                                caption: obj.name
-                            }
+                            properties: obj
                         }
                     })
                     instance.$mount() // pass nothing
@@ -156,9 +239,13 @@ export default {
                     break;
             }
 
-            document.getElementById("canvas").appendChild(instance.$el)
+            document.getElementById("canvas").appendChild(instance.$el);
+
             store.state.project.pages[store.state.activePage].components.push(obj);
+            //console.log(store.state.project)
             eventBus.$emit("showProperties", obj.name)
+            eventBus.$emit("componentAdded", obj)
+
         });
 
         this.panzoom = Panzoom(document.getElementById("canvas"), {

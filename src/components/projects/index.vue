@@ -13,6 +13,8 @@
 
 <script>
 import store from "@/store";
+//import eventBus from "@/event-bus";
+
 const { ipcRenderer } = window.require("electron");
 /*
 var remote = window.require('@electron/remote');
@@ -65,6 +67,7 @@ export default {
         this.$router.push({
           name: "Editor",
         });
+    
       });
     },
   },
