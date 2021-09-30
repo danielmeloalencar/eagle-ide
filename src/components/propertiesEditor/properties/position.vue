@@ -1,8 +1,8 @@
 <template>
-        <div class="property">
-            <div class="field">BackgroundColor</div>
-            <div class="value"><input type="color" :value="componentMutable.backgroundColor" @input="changeProperty('backgroundColor',$event)"></div>
-            <div class="value"><button @click="changeProperty('backgroundColor','transparent')">none</button></div>
+    <div class="property">
+            <div class="field">Position</div>
+            <div class="value">{{componentMutable.x}}</div>
+            <div class="value">{{componentMutable.y}}</div>
         </div>
 </template>
 
@@ -29,11 +29,12 @@ export default {
     border: 1px solid rgba(91, 94, 93, 0.39);
     align-items: center;
     padding-left: 2px;
+    padding-top: 2px;
+    padding-bottom: 2px;
     justify-content: flex-start;
     justify-items: center;
     display: flex;
     min-width: 120px;
-
 }
 
 .value {
@@ -47,11 +48,4 @@ export default {
     display: flex;
 }
 
-.value input {
-    width: 100%;
-}
-
-.value button {
-    width: 100%;
-}
 </style>

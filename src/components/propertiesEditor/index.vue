@@ -1,15 +1,14 @@
 <template>
-<div class="container">
-    <template v-if="component">
-        <div v-show="component.type ==='Button'" :key="'Button_'+component.name">
+<div class="container" v-if="component">
+          <div v-if="component.type ==='Button'" :key="'Button_'+component.name">
             <ButtonPop :component="component" />
         </div>
 
-        <div v-show="component.type ==='View'" :key="'View_'+component.name">
+        <div v-if="component.type ==='View'" :key="'View_'+component.name">
             <!--key é apenas para forçar a renderização, evitando que Component fique sempre igual -->
             <ViewPop :component="component" />
         </div>
-    </template>
+    
 </div>
 </template>
 
@@ -29,11 +28,15 @@ export default {
             component: null
         }
     },
+      beforeDestroy() {
+        // Remove all listening events. When this component is referenced multiple times, all referenced listeners are removed
+          eventBus.$off("loadComponents");
+    },
     mounted() {
         eventBus.$on("showProperties", data => {
             this.component = this.loadComponent(data);
-
-        })
+            console.log("CARREGADO", this.component)
+            })
     },
     methods: {
         loadComponent(name) {

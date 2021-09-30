@@ -9,10 +9,11 @@ export default {
       componentMutable: this.component,
     };
   },
-  mounted() {},
+  mounted() {
+    },
 
   methods: {
-    changeProperty(propName, event) {
+   changeProperty(propName, event) {
       //Algumas vezes receberá um evento, outras vezes receberá uma string
 
       let value = event.target ? event.target.value : event;
@@ -24,6 +25,11 @@ export default {
           //Remove espaço em branco
           value = value.split(" ").join("");
         }
+
+        if (propName == "x" || propName == "y" || propName == "width" || propName == "height" || propName == "zIndex") {
+          //Remove espaço em branco
+          value =parseInt(value);
+        }
         //
         properties[propName] = value;
         eventBus.$emit("setProperty", {
@@ -31,9 +37,12 @@ export default {
           name: this.component.name,
           properties,
         });
+
         //altera a propriedade no STORE
         this.componentMutable = { ...this.component, ...properties };
-        this.saveComponent(this.component.name);
+        console.log(this.componentMutable)
+          this.saveComponent(this.component.name);
+
       }
     },
 

@@ -1,31 +1,34 @@
 <template>
 <div class="container">
     <div class="component-type">Type: {{component.type}}</div>
-    <div class="properties">
-        <div class="property">
-            <div class="field">Name</div>
-            <div class="value"><input :value="componentMutable.name" @change="changeProperty('name',$event)"></div>
-        </div>
-        <!------------------------------------------------------------------------------->
-        <div class="property">
-            <div class="field">Caption</div>
-            <div class="value"><input :value="componentMutable.caption" @change="changeProperty('caption',$event)"></div>
-        </div>
-        <!------------------------------------------------------------------------------->
-        <div class="property">
-            <div class="field">zIndex</div>
-            <div class="value"><input type="number" :value="component.zIndex" @input="changeProperty('zIndex',$event)"></div>
-            <div class="value"><button @click="changeProperty('zIndex','')">auto</button></div>
-        </div>
-        <!------------------------------------------------------------------------------->
+      <div class="properties">
+       <Parent :component="component"/>
+       <Position :component="component" />
+       <Size :component="component" />
+       <Name :component="component"/>
+       <Caption :component="component" />
+       <ZIndex :component="component" />
     </div>
 </div>
 </template>
-
 <script>
 import propertiesEditorMixin from "@/mixins/propertiesEditorMixin";
+import Parent from "@/components/propertiesEditor/properties/parent.vue"
+import Name from "@/components/propertiesEditor/properties/name.vue"
+import Caption from "@/components/propertiesEditor/properties/caption.vue"
+import ZIndex from "@/components/propertiesEditor/properties/zIndex.vue"
+import Position from "@/components/propertiesEditor/properties/position.vue"
+import Size from "@/components/propertiesEditor/properties/size.vue"
 export default {
     mixins: [propertiesEditorMixin],
+    components:{
+        Parent,
+        Name,
+        Caption,
+        ZIndex,
+        Position,
+        Size,
+    }
 
 }
 </script>
