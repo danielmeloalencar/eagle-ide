@@ -18,7 +18,11 @@ export default {
         zIndex: {
             default: 'auto'
         },
-    }
+    },
+    methods: {
+     
+    },
+    
 };
 </script>
 

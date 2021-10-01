@@ -18,29 +18,43 @@ export default {
             dragStartComponent: null,
         }
     },
-    mounted(){
-        eventBus.$on("openPage",(index) =>{
-            this.data=store.state.project.pages[index].components;
+    beforeDestroy() {
+        // Remove all listening events. When this component is referenced multiple times, all referenced listeners are removed
+        eventBus.$off("componentAdded");
+        eventBus.$off("openPage");
+        this.$el.parentNode.removeChild(this.$el);
+        console.log("Layers Destruidos")
+    },
+    mounted() {
+        eventBus.$on("componentDeleted", (name) => {
+            console.log("component Deleted " + name)
+            console.log("Reloading layers")
+            this.data = store.state.project.pages[ store.state.activePage].components;
         })
 
-        eventBus.$on("componentAdded",(component) =>{
+        eventBus.$on("openPage", (index) => {
+            this.data = store.state.project.pages[index].components;
+        })
+
+        eventBus.$on("componentAdded", (component) => {
             //verificar antes se tem um component.parent, caso sim, então varrer recursivamente
             //todos os objetos no this.data em busca do parent e fazer o push nele
             //Caso contrário, faça o push abaixo
-           let existe = false;
-            let todosComponentesArray =this.buscaRecursiva();
-            todosComponentesArray.map((comp)=>{
-                if (component.name ==comp.name)
-                  existe=true;
+            let existe = false;
+            let todosComponentesArray = this.buscaRecursiva();
+            todosComponentesArray.map((comp) => {
+                if (component.name == comp.name)
+                    existe = true;
             })
             console.log("LISTA DE LAYERS", this.buscaRecursiva())
-            if(!existe)
-             this.data.push(component)
+            if (!existe)
+                this.data.push(component)
         })
     },
     methods: {
-        buscaRecursiva(){
-               function findValues(obj, key) {
+
+        buscaRecursiva() {
+            function findValues(obj, key) {
                 return findValuesHelper(obj, key, []);
             }
 
@@ -70,7 +84,8 @@ export default {
         },
 
         allowDrag(model, component) {
-            if (model.nome === 'TESTE') {
+
+            if (model.name === 'TESTE') {
                 console.log(component)
                 // can't be dragged
                 return false;
@@ -79,8 +94,7 @@ export default {
             return true;
         },
         allowDrop(model) {
-
-
+ 
             if (model.name === 'Node 2-2') {
                 // can't be placed
                 return false;
@@ -103,30 +117,30 @@ export default {
         },
 
         dropHandler(model) {
-      
-
-            var toRoot = false;
+                var toRoot = false;
             Object.entries(model.children).forEach(([key, value]) => {
                 console.log(key)
                 if (value.name == this.dragStartComponent.name)
                     toRoot = true;
             });
 
-          
-            if (toRoot==false){
-            this.dragStartComponent.parent= null;
-            eventBus.$emit("reloadComponent", {parent: null,component: this.dragStartComponent});
-            }               
-            else{
-                this.dragStartComponent.parent= model.name;
-  
-  
-              eventBus.$emit("deleteComponent", this.dragStartComponent.name);
-            console.log("ARRASTADO",this.dragStartComponent)
-              eventBus.$emit("reloadComponent",{parent: model.name,component: this.dragStartComponent});
-          
+            if (toRoot == false) {
+                this.dragStartComponent.parent = null;
+                eventBus.$emit("reloadComponent", {
+                    parent: null,
+                    component: this.dragStartComponent
+                });
+            } else {
+                this.dragStartComponent.parent = model.name;
+
+                eventBus.$emit("deleteComponent", this.dragStartComponent.name);
+                console.log("ARRASTADO", this.dragStartComponent)
+                eventBus.$emit("reloadComponent", {
+                    parent: model.name,
+                    component: this.dragStartComponent
+                });
+
             }
-                
 
         }
     }

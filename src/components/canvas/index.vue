@@ -155,6 +155,7 @@ export default {
         // Remove all listening events. When this component is referenced multiple times, all referenced listeners are removed
         eventBus.$off("addComponent");
         eventBus.$off("loadComponents");
+        this.$el.parentNode.removeChild(this.$el);
     },
     created() {
     
