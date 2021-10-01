@@ -1,7 +1,7 @@
 import { app, protocol, BrowserWindow, Menu, dialog, remote } from "electron";
 import { createProtocol } from "vue-cli-plugin-electron-builder/lib";
 import installExtension, { VUEJS_DEVTOOLS } from "electron-devtools-installer";
-const isDevelopment = false;
+const isDevelopment = true;
 require('@electron/remote/main').initialize()
 
 import "./backend";

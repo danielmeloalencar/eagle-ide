@@ -4,6 +4,7 @@
   "private": true,
   "description": "Vue/Electron based Visual React Native IDE",
   "author": "Daniel Melo Alencar",
+  
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -81,4 +82,5 @@
   ],
   "email": "danielmalencar2011@gmail.com",
   "title": "Eagle IDE"
-}
+ 
+ }
