@@ -1,6 +1,6 @@
 <template>
-<splitpanes horizontal :push-other-panes="true" style="height: 100vh;margin:0px padding:0px;overflow:hidden;">
-    <pane min-size="10" size="10" max-size="10" style="display: flex">
+<splitpanes horizontal :push-other-panes="true" style="height: 100vh;margin:0px padding:0px;overflow:hidden;" >
+    <pane min-size="10" size="10" max-size="10" style="display: flex" >
         <div style="display: flex; flex: 1" class="noselect">
             <div class="logo-container">
                 <img src="@/assets/logo.png" width="50">
@@ -12,10 +12,10 @@
         </div>
     </pane>
     <pane>
-        <splitpanes :push-other-panes="false">
-            <pane min-size="5" size="20" max-size="20">
-                <splitpanes horizontal :push-other-panes="false">
-                    <pane min-size="5">
+        <splitpanes :push-other-panes="false" >
+            <pane min-size="5" size="20" max-size="20"  >
+                <splitpanes horizontal :push-other-panes="false" >
+                    <pane min-size="5" >
                         <Box titulo="Layers">
                             <Layers />
                         </Box>
@@ -27,7 +27,7 @@
                     </pane>
                 </splitpanes>
             </pane>
-            <pane min-size="5" size="65" class="canvas-container noselect">
+            <pane min-size="5" size="65" class="canvas-container noselect" >
                 <Canvas v-show="activeTab == 0" ref="canvas" />
                 <Editor v-show="activeTab == 1" />
                 <div style="
@@ -56,16 +56,16 @@
                 </div>
             </pane>
 
-            <pane min-size="3" max-size="20" size="15" class="noselect">
+            <pane min-size="3" max-size="20" size="15" class="noselect" >
                 <Box titulo="Components">
                     <button class="btn-add-component" @click="addComponent('View')">View </button>
                     <button class="btn-add-component" @click="addComponent('Button')">Button </button>
                 </Box>
             </pane>
-            <pane min-size="3" size="10">
+            <pane min-size="3" size="10"   >
 
-                <Box titulo="Pages">
-                    <button @click="addPage()" style="width:100%; " class="btn-add-component">New Page</button>
+                <Box titulo="Pages" >
+                    <button @click="addPage()" style="width:100%; " class="btnSaveProject">New Page</button>
                     <hr>
                     <button v-for="(page,index) in pages" :key="index" class="btn-select-page" @click="()=>{openPage(index)}">{{page.name}}</button>
 
@@ -97,6 +97,7 @@ import Editor from "@/components/codeEditor";
 import Layers from "@/components/layers";
 import PropertiesEditor from "@/components/propertiesEditor";
 import eventBus from "@/event-bus";
+
 const {
     ipcRenderer
 } = window.require("electron");
@@ -111,7 +112,8 @@ export default {
         Canvas,
         Editor,
         Layers,
-        PropertiesEditor
+        PropertiesEditor,
+        
     },
     data() {
         return {

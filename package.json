@@ -21,11 +21,13 @@
     "@panzoom/panzoom": "^4.4.1",
     "core-js": "^3.6.5",
     "mount-vue-component": "^0.10.1",
+    "snack-sdk": "^3.5.1",
     "splitpanes": "^2.3.8",
     "vue": "^2.6.11",
     "vue-drag-tree": "^1.1.9",
     "vue-draggable-resizable": "^2.3.0",
     "vue-router": "^3.2.0",
+    "vue2-code-editor": "^0.0.6",
     "vuex": "^3.4.0"
   },
   "devDependencies": {
