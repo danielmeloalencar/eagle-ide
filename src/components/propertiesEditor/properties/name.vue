@@ -30,7 +30,7 @@ export default {
     justify-content: flex-start;
     justify-items: center;
     display: flex;
-    min-width: 120px;
+    min-width: 122px;
 
 }
 
@@ -39,7 +39,7 @@ export default {
     font-size: 12px;
     border: 1px solid rgba(91, 94, 93, 0.39);
     align-items: center;
-    padding-left: 2px;
+    padding: 2px;
     justify-content: flex-start;
     justify-items: center;
     display: flex;
@@ -47,6 +47,8 @@ export default {
 
 .value input {
     width: 100%;
+    border: none!important;
+    outline: none!important;
 }
 
 .value button {

@@ -63,8 +63,12 @@
                 </Box>
             </pane>
             <pane min-size="3" size="10">
+
                 <Box titulo="Pages">
-                    <button v-for="(page,index) in pages" :key="index" class="btn-select-page">{{page.name}}</button>
+                    <button @click="addPage()" style="width:100%; " class="btn-add-component">New Page</button>
+                    <hr>
+                    <button v-for="(page,index) in pages" :key="index" class="btn-select-page" @click="()=>{openPage(index)}">{{page.name}}</button>
+
                 </Box>
             </pane>
         </splitpanes>
@@ -128,8 +132,24 @@ export default {
     },
 
     methods: {
+        addPage() {
+            let num = this.$store.state.project.pages.length + 1;
+            store.state.project.pages.push({
+                "name": "page" + num,
+                "components": []
+            })
+               eventBus.$emit('openPage', num - 1)
+            eventBus.$emit("showProperties", "page" + num - 1);
+         
+
+        },
         addComponent(tipo) {
             eventBus.$emit('addComponent', tipo)
+        },
+        openPage(index) {
+            eventBus.$emit('openPage', index)
+            eventBus.$emit("showProperties", store.state.project.pages[index].name);
+   
         },
         closeProject() {
             this.$router.push({

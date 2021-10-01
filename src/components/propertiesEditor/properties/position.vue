@@ -34,7 +34,7 @@ export default {
     justify-content: flex-start;
     justify-items: center;
     display: flex;
-    min-width: 120px;
+    min-width: 122px;
 }
 
 .value {

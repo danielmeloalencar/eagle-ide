@@ -9,7 +9,7 @@
 
 <script>
 import eventBus from "@/event-bus";
-
+import store from "@/store";
 //https://github.com/shuiRong/vue-drag-tree
 export default {
     data() {
@@ -19,6 +19,10 @@ export default {
         }
     },
     mounted(){
+        eventBus.$on("openPage",(index) =>{
+            this.data=store.state.project.pages[index].components;
+        })
+
         eventBus.$on("componentAdded",(component) =>{
             //verificar antes se tem um component.parent, caso sim, então varrer recursivamente
             //todos os objetos no this.data em busca do parent e fazer o push nele

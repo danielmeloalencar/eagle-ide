@@ -55,6 +55,8 @@ export default {
         },
         handleCanvasClick: function () {
             store.state.selectedComponent = null;
+            eventBus.$emit("showProperties", store.state.project.pages[store.state.activePage].name);
+
             //alert("CARREGA PROPRIEDADES DO CANVAS");
         },
         zoom(level) {
@@ -155,10 +157,10 @@ export default {
         eventBus.$off("loadComponents");
     },
     created() {
-        //para abrir projeto
-        eventBus.$on('loadComponent', data => {
-            this.loadComponent(data.parent, data.component)
-        })
+    
+
+     
+        
 
         //para layers
         eventBus.$on('reloadComponent', data => {
@@ -186,7 +188,24 @@ export default {
     },
 
     mounted: function () {
+            //para abrir projeto
+        eventBus.$on('loadComponent', data => {
+            this.loadComponent(data.parent, data.component)
+            
+        })
+       //Para troca de páginas
+         eventBus.$on('openPage', index => {
+             if(index==store.state.activePage)
+             return
+              document.getElementById("canvas").innerHTML="";  
+                 store.state.activePage =index
+                this.loadComponents(index)
+                
+                         
+        })
+
         this.loadComponents();
+        eventBus.$emit("showProperties", store.state.project.pages[store.state.activePage].name);
         //Handle add components
         eventBus.$on('addComponent', tipo => {
             let instance = null;

@@ -8,6 +8,11 @@
             <!--key é apenas para forçar a renderização, evitando que Component fique sempre igual -->
             <ViewPop :component="component" />
         </div>
+
+           <div v-if="component.type ==='Page'" :key="'Page_'+component.name">
+            <!--key é apenas para forçar a renderização, evitando que Component fique sempre igual -->
+            <PageProp :component="component" />
+        </div>
     
 </div>
 </template>
@@ -15,12 +20,14 @@
 <script>
 import ButtonPop from "@/components/propertiesEditor/buttonProp.vue";
 import ViewPop from "@/components/propertiesEditor/viewProp.vue";
+import PageProp from "@/components/propertiesEditor/pageProp.vue";
 import store from "@/store";
 import eventBus from "@/event-bus";
 export default {
     components: {
         ButtonPop,
-        ViewPop
+        ViewPop,
+        PageProp,
     },
 
     data() {
@@ -34,6 +41,17 @@ export default {
     },
     mounted() {
         eventBus.$on("showProperties", data => {
+            //Verifica se é página ou componente
+            if(store.state.project.pages[store.state.activePage].name===data)
+                {
+                    //Lógica para carregar página
+
+let propriedades = {type:"Page", name: store.state.project.pages[store.state.activePage].name}
+                  this.component = propriedades;  
+                  
+                    return 
+                }
+      
             this.component = this.loadComponent(data);
             console.log("CARREGADO", this.component)
             })
