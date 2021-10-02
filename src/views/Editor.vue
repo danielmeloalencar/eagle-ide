@@ -60,6 +60,7 @@
                 <Box titulo="Components">
                     <button class="btn-add-component" @click="addComponent('View')">View </button>
                     <button class="btn-add-component" @click="addComponent('Button')">Button </button>
+                    <button class="btn-add-component" @click="addComponent('Youtube')">Youtube Video </button>
                 </Box>
             </pane>
             <pane min-size="3" size="10"   >
@@ -94,7 +95,7 @@ import "../utils/css-utils.css";
 import Box from "@/components/box";
 import Canvas from "@/components/canvas";
 import Editor from "@/components/codeEditor";
-import Layers from "@/components/layers";
+import Layers from "@/components/layers/novo.vue";
 import PropertiesEditor from "@/components/propertiesEditor";
 import eventBus from "@/event-bus";
 

@@ -18,14 +18,15 @@ import Vue from 'vue';
 import Panzoom from "@panzoom/panzoom"; // Docs https://github.com/timmywil/panzoom
 import {
     RNView,
-    RNButton
+    RNButton,
+    RNYoutube
 } from "../componentPalette";
 import store from "@/store";
 import eventBus from "@/event-bus";
 
 const RNButtonClass = Vue.extend(RNButton);
 const RNViewClass = Vue.extend(RNView);
-
+const RNYoutubeClass = Vue.extend(RNYoutube);
 export default {
     components: {},
 
@@ -104,7 +105,7 @@ export default {
                         component: obj[i]
                     })
                     /// console.log(obj[i], parent);
-                    if (obj[i].children) {
+                    if (obj[i].children.length >0) {
                         return search(obj[i].children, obj[i].name);
                     }
                 }
@@ -217,7 +218,7 @@ export default {
                 name: id,
                 id: id,
                 parent: null,
-                children: null,
+                children: [],
                 x: 100,
                 y: 100,
                 height:100,
@@ -227,6 +228,15 @@ export default {
             switch (tipo) {
                 case 'View':
                     instance = new RNViewClass({
+                        propsData: {
+                            properties: obj
+                        }
+                    })
+
+                    instance.$mount() // pass nothing
+                    break;
+                        case 'Youtube':
+                    instance = new RNYoutubeClass({
                         propsData: {
                             properties: obj
                         }

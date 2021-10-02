@@ -23,6 +23,7 @@ export default {
     width: 100%;
 }
 
+
 .movel {
     cursor: move;
 }
