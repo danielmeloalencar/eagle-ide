@@ -1,8 +1,8 @@
 <template>
 <div class="property">
     <div class="field">Size</div>
-    <div class="value"><input :value="componentMutable.width" @change="handleChange('width',$event.target.value)"></div>
-    <div class="value"><input :value="componentMutable.height" @change="handleChange('height',$event.target.value)"></div>
+    <div class="value"><input type="number" :value="componentMutable.width" @change="handleChange('width',$event.target.value)"></div>
+    <div class="value"><input type="number" :value="componentMutable.height" @change="handleChange('height',$event.target.value)"></div>
 
 </div>
 </template>

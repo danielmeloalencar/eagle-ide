@@ -176,10 +176,9 @@ export default {
             function search(obj, parent = null) {
                 for (let i in obj) {
                     // this.loadComponent(parent, obj[i])
-                    eventBus.$emit("loadComponent", {
-                        parent: parent,
-                        component: obj[i]
-                    })
+                    this.loadComponent(parent,
+                        obj[i]
+                    )
                     console.log(obj[i], parent);
                     if (obj[i].children) {
                         return search(obj[i].children, obj[i].name);
@@ -206,6 +205,13 @@ export default {
                          
         })
 
+
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
         this.loadComponents();
         eventBus.$emit("showProperties", store.state.project.pages[store.state.activePage].name);
         //Handle add components
@@ -219,8 +225,8 @@ export default {
                 id: id,
                 parent: null,
                 children: [],
-                x: 100,
-                y: 100,
+                x: getRandomInt(0,this.$refs.container.clientWidth / 4),
+                y: getRandomInt(0,this.$refs.container.clientHeight / 4),
                 height:100,
                 width:100,
             };
@@ -250,8 +256,7 @@ export default {
                         ...obj,
                         ...{
                             caption: obj.name,
-                            x: 100,
-                            y: 100
+      
                         }
                     }
                     instance = new RNButtonClass({
@@ -302,7 +307,7 @@ export default {
 <style scoped>
 #container {
     height: 90%;
-    background-color: rgb(78, 78, 78);
+    background-color: rgb(32, 29, 29);
     background-image: url("../../assets/background.png");
     background-repeat: repeat;
     background-position: center;
@@ -316,17 +321,20 @@ export default {
 }
 
 #canvas {
-    height: 790px;
+    width: 375px;
+    height: 812px;
     background-color: #fff;
-    width: 380px;
     overflow: hidden;
-    border: 1px solid rgb(80, 78, 78);
+    border: 0px solid rgb(80, 78, 78);
     color: black;
     position: relative;
-    border-radius: 20px;
+    border-radius: 30px;
+     mask-image: url('../../assets/iphone.png');
     -webkit-box-shadow: 5px 5px 18px 5px rgba(0, 0, 0, 0.541);
     box-shadow: 5px 5px 18px 5px rgba(0, 0, 0, 0.507);
 }
+
+
 
 .grid {
     background-image:

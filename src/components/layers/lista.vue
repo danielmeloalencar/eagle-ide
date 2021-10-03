@@ -45,12 +45,18 @@ export default {
             if (this.moveID == "") return
 
             function search(name, obj) {
+                // TODO consertar isto. 
+                console.log("TODOSSSS",obj)
                 for (let i in obj) {
+                    console.log("COMPONENTEEEEEEEEEEEE",obj[i])
                     // this.loadComponent(parent, obj[i])
                     if (obj[i].name == name)
-                        return obj[i]; //econtrou, então retorne o objeto
+                    {   
+                         return obj[i]; //econtrou, então retorne o objeto
+                    }
+                       
 
-                    if (obj[i].children) {
+                    if (obj[i].children.length >0) {
                         return search(name, obj[i].children);
                     }
                 }
@@ -58,11 +64,10 @@ export default {
 
             //Remove da DOM apenas, não tem necessidade de remover do store
             eventBus.$emit("deleteDOMComponent", this.moveID);
-            // console.log("TENTANDO MOVER ", this.moveID, "PARA",para)
-
-            //pega o objeto do componente a ser movido
+             console.log("TENTANDO MOVER ", "'"+this.moveID+"'", "PARA","'"+para+"'")
+               //pega o objeto do componente a ser movido
             let component = search(this.moveID, store.state.project.pages[store.state.activePage].components)
-
+            console.log("COMPONENTE ENCONTRADO",component)
             eventBus.$emit("reloadComponent", {
                 parent: para,
                 component: component
