@@ -1,20 +1,27 @@
 <template>
-    <div class="property">
-            <div class="field">Size</div>
-            <div class="value">{{componentMutable.width}}</div>
-            <div class="value">{{componentMutable.height}}</div>
-        </div>
+<div class="property">
+    <div class="field">Size</div>
+    <div class="value"><input :value="componentMutable.width" @change="handleChange('width',$event.target.value)"></div>
+    <div class="value"><input :value="componentMutable.height" @change="handleChange('height',$event.target.value)"></div>
+
+</div>
 </template>
 
 <script>
 import propertiesEditorMixin from "@/mixins/propertiesEditorMixin";
+import eventBus from "@/event-bus";
 export default {
     mixins: [propertiesEditorMixin],
+    methods:{
+        handleChange(prop,valor){
+                eventBus.$emit("setSingleProp",{name:this.componentMutable.name,prop:prop, value:parseInt(valor)})
+    
+        }
+    }
 }
 </script>
 
 <style scoped>
-
 .property {
     display: flex;
     flex-direction: row;
@@ -48,5 +55,7 @@ export default {
     display: flex;
 }
 
-
+.value input {
+    width: 100%;
+}
 </style>
