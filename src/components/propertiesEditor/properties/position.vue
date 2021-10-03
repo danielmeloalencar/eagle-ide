@@ -1,15 +1,22 @@
 <template>
     <div class="property">
             <div class="field">Position</div>
-            <div class="value">{{componentMutable.x}}</div>
-            <div class="value">{{componentMutable.y}}</div>
+            <div class="value"><input :value="componentMutable.x" @change="handleChange('x',$event.target.value)"></div>
+            <div class="value"><input :value="componentMutable.y" @change="handleChange('y',$event.target.value)"></div>
         </div>
 </template>
 
 <script>
 import propertiesEditorMixin from "@/mixins/propertiesEditorMixin";
+import eventBus from "@/event-bus";
 export default {
     mixins: [propertiesEditorMixin],
+    methods:{
+        handleChange(prop,valor){
+                eventBus.$emit("setSingleProp",{name:this.componentMutable.name,prop:prop, value:parseInt(valor)})
+    
+        }
+    }
 }
 </script>
 
@@ -48,4 +55,7 @@ export default {
     display: flex;
 }
 
+.value input {
+    width: 100%;
+}
 </style>

@@ -1,5 +1,5 @@
 <template>
-<draggable class="dragArea" tag="ul" :list="tasks" :group="{ name: 'g1' }" @end="handleEnd" @start="handleStart" >
+<draggable class="dragArea" tag="ul" :list="tasks" :group="{ name: 'g1' }" @end="handleEnd" @start="handleStart">
     <li :class="selected==el.name ? 'actived':''" v-for="el in tasks" :key="el.name" @click.stop="handleClick(el.name)">{{el.name}}
         <nested-draggable :tasks="el.children" :id="el.name" @end="handleEnd" />
     </li>
@@ -8,6 +8,7 @@
 </template>
 
 <script>
+import store from "@/store";
 import draggable from "vuedraggable";
 import eventBus from "@/event-bus";
 export default {
@@ -17,17 +18,18 @@ export default {
             type: Array
         }
     },
-    data(){
-        return{
-            selected:''
+    data() {
+        return {
+            selected: '',
+            moveID: ''
         }
-    },    
-    mounted(){
- eventBus.$on("showProperties", (name) => {
-          this.selected = name;
-    });
     },
-  
+    mounted() {
+        eventBus.$on("showProperties", (name) => {
+            this.selected = name;
+        });
+    },
+
     components: {
         draggable
     },
@@ -35,13 +37,47 @@ export default {
     methods: {
 
         handleClick(name) {
-              eventBus.$emit("componentSelected",name)
+            eventBus.$emit("componentSelected", name)
         },
         handleEnd(event) {
-               console.log("PARA", event.to.id || "nada")
+            let para = event.to.id.trim();
+            if(para=="") para = null
+            if (this.moveID == "") return
+
+            function search(name, obj) {
+                for (let i in obj) {
+                    // this.loadComponent(parent, obj[i])
+                    if (obj[i].name == name)
+                        return obj[i]; //econtrou, então retorne o objeto
+
+                    if (obj[i].children) {
+                        return search(name, obj[i].children);
+                    }
+                }
+            }
+
+            //Remove da DOM apenas, não tem necessidade de remover do store
+            eventBus.$emit("deleteDOMComponent", this.moveID);
+            // console.log("TENTANDO MOVER ", this.moveID, "PARA",para)
+
+            //pega o objeto do componente a ser movido
+            let component = search(this.moveID, store.state.project.pages[store.state.activePage].components)
+
+            eventBus.$emit("reloadComponent", {
+                parent: para,
+                component: component
+            });
+           
+          
+
+            //console.log("PARA", event.to.id || "nada")
+            //  eventBus.$emit("deleteComponent", this.moveID);
+            //console.log("ARRASTADO", this.dragStartComponent)
+
         },
         handleStart(event) {
-            console.log("QUEM", event.clone.firstChild.data)
+            //  console.log("QUEM", event.clone.firstChild.data)
+            this.moveID = event.clone.firstChild.data.trim();
         },
 
     }
@@ -70,13 +106,14 @@ ul {
     list-style: none;
     padding-left: 32px;
 }
+
 .actived {
-background: #bd93f93f;
-color: #bd93f9;
-border-radius: 2px;
-border-bottom: 1px solid rgb(241, 241, 241);
-padding: 2px;
-transition: background .5s, color 1s, border-radius 1s;
+    background: #bd93f93f;
+    color: #bd93f9;
+    border-radius: 2px;
+    border-bottom: 1px solid rgb(241, 241, 241);
+    padding: 2px;
+    transition: background .5s, color 1s, border-radius 1s;
 }
 
 li::before,

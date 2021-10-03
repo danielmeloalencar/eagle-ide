@@ -15,19 +15,19 @@
         <splitpanes :push-other-panes="false" >
             <pane min-size="5" size="20" max-size="20"  >
                 <splitpanes horizontal :push-other-panes="false" >
-                    <pane min-size="5" >
+                    <pane min-size="5"   v-if="activeTab == 0">
                         <Box titulo="Layers">
                             <Layers />
                         </Box>
                     </pane>
-                    <pane min-size="5">
-                        <Box titulo="Properties">
+                    <pane min-size="5" >
+                        <Box titulo="Properties"  v-if="activeTab == 0">
                             <PropertiesEditor />
                         </Box>
                     </pane>
                 </splitpanes>
             </pane>
-            <pane min-size="5" size="65" class="canvas-container noselect" >
+            <pane min-size="5" :size="activeTab == 0?70:100 " class="canvas-container noselect" :push-other-panes="true"  >
                 <Canvas v-show="activeTab == 0" ref="canvas" />
                 <Editor v-show="activeTab == 1" />
                 <div style="
@@ -56,16 +56,16 @@
                 </div>
             </pane>
 
-            <pane min-size="3" max-size="20" size="15" class="noselect" >
-                <Box titulo="Components">
+            <pane min-size="3" max-size="20" size="15" class="noselect">
+                <Box titulo="Components" v-if="activeTab == 0">
                     <button class="btn-add-component" @click="addComponent('View')">View </button>
                     <button class="btn-add-component" @click="addComponent('Button')">Button </button>
                     <button class="btn-add-component" @click="addComponent('Youtube')">Youtube Video </button>
                 </Box>
             </pane>
-            <pane min-size="3" size="10"   >
+            <pane min-size="3" size="10" max-size="15" class="noselect" >
 
-                <Box titulo="Pages" >
+                <Box titulo="Pages"  >
                     <button @click="addPage()" style="width:100%; " class="btnSaveProject">New Page</button>
                     <hr>
                     <button v-for="(page,index) in pages" :key="index" class="btn-select-page" @click="()=>{openPage(index)}">{{page.name}}</button>

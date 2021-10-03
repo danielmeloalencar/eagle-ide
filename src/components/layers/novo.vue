@@ -28,6 +28,11 @@ export default {
         eventBus.$on('openPage', (index)=>{
             this.list= store.state.project.pages[index].components
         })
+
+         eventBus.$on('componentDeleted', (name)=>{
+              console.log("Componente", name, "foi removido. Layers atualizados")
+            this.list= store.state.project.pages[store.state.activePage].components
+        })
         
   }
 };
