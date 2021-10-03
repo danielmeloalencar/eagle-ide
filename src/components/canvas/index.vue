@@ -307,7 +307,7 @@ function getRandomInt(min, max) {
 <style scoped>
 #container {
     height: 90%;
-    background-color: rgb(78, 78, 78);
+    background-color: rgb(32, 29, 29);
     background-image: url("../../assets/background.png");
     background-repeat: repeat;
     background-position: center;
@@ -321,17 +321,20 @@ function getRandomInt(min, max) {
 }
 
 #canvas {
-    height: 790px;
+    width: 375px;
+    height: 812px;
     background-color: #fff;
-    width: 380px;
     overflow: hidden;
-    border: 1px solid rgb(80, 78, 78);
+    border: 0px solid rgb(80, 78, 78);
     color: black;
     position: relative;
-    border-radius: 20px;
+    border-radius: 30px;
+     mask-image: url('../../assets/iphone.png');
     -webkit-box-shadow: 5px 5px 18px 5px rgba(0, 0, 0, 0.541);
     box-shadow: 5px 5px 18px 5px rgba(0, 0, 0, 0.507);
 }
+
+
 
 .grid {
     background-image:
