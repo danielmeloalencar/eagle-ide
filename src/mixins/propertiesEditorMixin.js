@@ -44,6 +44,7 @@ export default {
           this.saveComponent(this.component.name);
 
       }
+      eventBus.$emit("componentUpdated",this.component.name)
     },
 
     loadComponent(name) {

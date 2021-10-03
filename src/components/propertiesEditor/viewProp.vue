@@ -20,6 +20,8 @@ import BackgroundColor from "@/components/propertiesEditor/properties/background
 import ZIndex from "@/components/propertiesEditor/properties/zIndex.vue"
 import Position from "@/components/propertiesEditor/properties/position.vue"
 import Size from "@/components/propertiesEditor/properties/size.vue"
+import eventBus from "@/event-bus";
+
 export default {
     mixins: [propertiesEditorMixin],
     components:{
@@ -29,8 +31,16 @@ export default {
         ZIndex,
         Position,
         Size
+    },
+ beforeDestroy() {
+      eventBus.$off("componentUpdated");
+  },
+  mounted() {
+    eventBus.$on("componentUpdated", (name) => {
+      if( name ===this.component.name)
+          console.log("CODIGO",this.component)
+    });
     }
-
 }
 </script>
 
