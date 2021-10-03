@@ -1,8 +1,8 @@
 <template>
     <div class="property">
             <div class="field">Position</div>
-            <div class="value"><input :value="componentMutable.x" @change="handleChange('x',$event.target.value)"></div>
-            <div class="value"><input :value="componentMutable.y" @change="handleChange('y',$event.target.value)"></div>
+            <div class="value"><input type="number" :value="componentMutable.x" @change="handleChange('x',$event.target.value)"></div>
+            <div class="value"><input type="number" :value="componentMutable.y" @change="handleChange('y',$event.target.value)"></div>
         </div>
 </template>
 

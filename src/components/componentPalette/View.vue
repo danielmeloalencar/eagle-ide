@@ -1,5 +1,5 @@
 <template>
-<vue-draggable-resizable :name="propertiesMutable.name" :style="{zIndex:propertiesMutable.zIndex}" class="movel" @activated="onActivated" :on-resize="onResize" :on-drag="onDragCallback" :on-drag-start="onDragStartCallback" :active="active" :x="propertiesMutable.x" :y="propertiesMutable.y" :w="propertiesMutable.width" :h="propertiesMutable.height" :parent="false" :grid="[grid.x,grid.y]" :draggable="draggable">
+<vue-draggable-resizable :name="propertiesMutable.name" :style="{zIndex:propertiesMutable.zIndex, backgroundColor:propertiesMutable.backgroundColor}" class="movel" @activated="onActivated" :on-resize="onResize" :on-drag="onDragCallback" :on-drag-start="onDragStartCallback" :active="active" :x="propertiesMutable.x" :y="propertiesMutable.y" :w="propertiesMutable.width" :h="propertiesMutable.height" :parent="false" :grid="[grid.x,grid.y]" :draggable="draggable">
     <slot>
         </slot>
 </vue-draggable-resizable>

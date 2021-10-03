@@ -1,5 +1,6 @@
 import eventBus from "@/event-bus";
 import store from "@/store";
+
 export default {
   props: {
     component: Object,
@@ -9,10 +10,12 @@ export default {
       componentMutable: this.component,
     };
   },
+
   mounted() {
     },
 
   methods: {
+
    changeProperty(propName, event) {
       //Algumas vezes receberá um evento, outras vezes receberá uma string
 
@@ -32,6 +35,8 @@ export default {
         }
         //
         properties[propName] = value;
+
+    
         eventBus.$emit("setProperty", {
           //envia as propriedades pro componente DOM
           name: this.component.name,

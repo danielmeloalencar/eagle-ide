@@ -39,6 +39,7 @@ export default {
     eventBus.$on("componentUpdated", (name) => {
       if( name ===this.component.name)
           console.log("CODIGO",this.component)
+          eventBus.$emit("setProperty", {name:name, properties:{code:"CODIGO AQUI"}})
     });
     }
 }

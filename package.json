@@ -21,6 +21,7 @@
     "@panzoom/panzoom": "^4.4.1",
     "core-js": "^3.6.5",
     "mount-vue-component": "^0.10.1",
+    "qrcode.vue": "^1.7.0",
     "snack-sdk": "^3.5.1",
     "splitpanes": "^2.3.8",
     "vue": "^2.6.11",

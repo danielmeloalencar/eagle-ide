@@ -15,12 +15,14 @@
         <splitpanes :push-other-panes="false" >
             <pane min-size="5" size="20" max-size="20"  >
                 <splitpanes horizontal :push-other-panes="false" >
-                    <pane min-size="5"   v-if="activeTab == 0">
-                        <Box titulo="Layers">
+                    <pane min-size="5"   >
+                        <Box titulo="Layers" v-if="activeTab == 0">
                             <Layers />
                         </Box>
                     </pane>
-                    <pane min-size="5" >
+                    <pane min-size="10" :style="{background:activeTab ===1?'#FFF':''}">
+                    <qrcode-vue :value="url" :size="170" level="H" v-if="url && activeTab == 1" class="qrcode" foreground="#604c72" />
+  
                         <Box titulo="Properties"  v-if="activeTab == 0">
                             <PropertiesEditor />
                         </Box>
@@ -83,7 +85,7 @@
 <script>
 //plugin
 //https://antoniandre.github.io/splitpanes
-
+import QrcodeVue from 'qrcode.vue'
 import {
     Splitpanes,
     Pane
@@ -114,14 +116,19 @@ export default {
         Editor,
         Layers,
         PropertiesEditor,
+        QrcodeVue
         
     },
     data() {
         return {
             activeTab: 0,
+            url:''
         };
     },
     mounted() {
+          eventBus.$on('qrcode', (data)=>{
+              this.url = data.url;
+          })
 
     },
     computed: {
@@ -301,5 +308,10 @@ export default {
     margin-right: 2px;
     border-radius: 5px;
 
+}
+
+.qrcode{
+   margin-top: 20px;
+    
 }
 </style>
