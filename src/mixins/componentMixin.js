@@ -1,4 +1,4 @@
-import VueDraggableResizable from "vue-draggable-resizable";
+import VueDraggableResizable from "../../third_party_components/vue-draggable-resizable/vue-draggable-resizable.vue";
 import "@/VueDraggableResizable.css";
 import store from "@/store";
 import eventBus from "@/event-bus";
@@ -60,10 +60,17 @@ export default {
       this.properties.height = height;
       
     },
-    onActivated() {
+    onBeforeActivate(){
+       
       eventBus.$emit("showProperties", this.properties.name);
       store.state.selectedComponent = this.properties.name;
+      console.log("ATIVADO", store.state.selectedComponent)
+      eventBus.$emit("desativarComponente", this.properties.name);
     },
+    onActivated() {
+   
+      
+      },
     onDragStartCallback() {
       // eventBus.$emit("lockComponent", this.properties.parent);
     },
@@ -147,9 +154,12 @@ export default {
 
   },
   mounted() {
+
+
     eventBus.$on("componentSelected", (name) => {
+      console.log("COMPONENTE SELECIONADO",name)
       this.active = name == this.properties.name;
-    });
+      });
 
     eventBus.$on("deleteDOMComponent", (name) => {
       if (name == this.propertiesMutable.name) {

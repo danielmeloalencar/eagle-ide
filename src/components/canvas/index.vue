@@ -223,7 +223,7 @@ function getRandomInt(min, max) {
                 type: tipo,
                 name: id,
                 id: id,
-                parent: null,
+                considerStatusbar:false,
                 children: [],
                 align:["left","top"],
                 x: getRandomInt(0,this.$refs.container.clientWidth / 4),

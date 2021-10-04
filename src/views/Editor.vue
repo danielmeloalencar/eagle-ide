@@ -130,6 +130,13 @@ export default {
               this.url = data.url;
           })
 
+               ipcRenderer.on("error", (e, err) => {
+                alert(err)
+            });
+               ipcRenderer.on("project-saved", () => {
+                alert("Projeto Salvo!")
+            });
+
     },
     computed: {
         projectName: function () {
@@ -162,6 +169,7 @@ export default {
    
         },
         closeProject() {
+        
             this.$router.push({
                 name: 'Home'
             })
@@ -174,16 +182,14 @@ export default {
                 selectedComponent: null,
                 activePage: 0,
             })
+                this.$destroy();
+              
         },
         saveProject() {
-            ipcRenderer.on("error", (e, err) => {
-                alert(err)
-            });
+       
             ipcRenderer.send("save-project", store.state.project);
 
-            ipcRenderer.on("project-saved", () => {
-                alert("Projeto Salvo!")
-            });
+         
         },
 
     }
