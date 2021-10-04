@@ -3,6 +3,7 @@
     <div class="component-type">Type: {{component.type}}</div>
     <div class="properties">
         <Anchors :component="component" />
+        <AddStatusbar :component="component" />
         <Position :component="component" />
         <Size :component="component" />
         <Name :component="component" />
@@ -20,6 +21,7 @@ import ZIndex from "@/components/propertiesEditor/properties/zIndex.vue"
 import Position from "@/components/propertiesEditor/properties/position.vue"
 import Size from "@/components/propertiesEditor/properties/size.vue"
 import Anchors from "@/components/propertiesEditor/properties/anchors.vue"
+import AddStatusbar from "@/components/propertiesEditor/properties/addStatusBar.vue"
 export default {
     mixins: [propertiesEditorMixin],
     components: {
@@ -28,7 +30,8 @@ export default {
         ZIndex,
         Position,
         Size,
-        Anchors
+        Anchors,
+        AddStatusbar
     }
 
 }

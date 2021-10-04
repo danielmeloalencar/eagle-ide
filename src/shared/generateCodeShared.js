@@ -1,30 +1,38 @@
 import store from "@/store";
-let canvasWidth= 375;
-let canvasHeight = 812;
 
-function layerToCode(properties)
+function layerToCodeOpen(properties)
 {
 
   if (properties.type=="View")
-  return `<View style={styles.${properties.name}}></View>`
+  return `<View style={styles.${properties.name}}>`
   if (properties.type=="Button")
   return `<View style={styles.${properties.name}}><Text>${properties.caption}</Text></View>`
 
 }
 
+function layerToCodeClose(properties)
+{
 
-function layersToCSS(properties)
+  if (properties.type=="View")
+  return `</View>`
+  if (properties.type=="Button")
+  return ``
+
+}
+
+function layersToCSS(properties,parent)
 {
   
   var alignHorizontal ='';
   var alignVertical = '';
+  var statusbar = properties.considerStatusbar==true? '+ Constants.statusBarHeight' :''; 
  if( properties.align.indexOf("left")>=0  && properties.align.indexOf("right")>=0 )
  {
  alignHorizontal = `left:${properties.x},
- right:${canvasWidth - (properties.width + properties.x)}`;
+ right:${parent.width - (properties.width + properties.x)}`;
  } else if(properties.align.indexOf("right")>=0 )
  {
-  alignHorizontal = `right:${canvasWidth - (properties.width + properties.x)}, 
+  alignHorizontal = `right:${parent.width - (properties.width + properties.x)}, 
  width:${properties.width}`;
  } 
  else if(properties.align.indexOf("left")>=0 )
@@ -36,16 +44,16 @@ width:${properties.width}`;
  //////////////////////////////////////////////////////////////////////////////////////
  if( properties.align.indexOf("top")>=0  && properties.align.indexOf("bottom")>=0 )
  {
-  alignVertical = `top:${properties.y} + Constants.statusBarHeight,
- bottom:${canvasHeight - (properties.height + properties.y)}`;
+  alignVertical = `top:${properties.y} ${statusbar},
+ bottom:${parent.height - (properties.height + properties.y)}`;
  } else if(properties.align.indexOf("bottom")>=0 )
  {
-  alignVertical = `bottom:${canvasHeight - (properties.height + properties.y)}, 
+  alignVertical = `bottom:${parent.height - (properties.height + properties.y)}, 
  height:${properties.height}`;
  } 
  else if(properties.align.indexOf("top")>=0 )
  {
-  alignVertical = `top:${properties.y} + Constants.statusBarHeight,
+  alignVertical = `top:${properties.y}  ${statusbar},
 height:${properties.height}`;
  } 
  
@@ -81,35 +89,36 @@ ${alignVertical},
 }
 
 function searchComponents(obj) {
-  let result = "";
-  // TODO consertar isto. 
+  let result="";
   for (let i in obj) {
      result= result + `
-          ` + layerToCode(obj[i])
-    //processa aqui
-         
-
+          ` + layerToCodeOpen(obj[i])
+        
       if (obj[i].children.length >0) {
         result= result + `
-          ` + searchComponents(obj[i].children);
+` + searchComponents(obj[i].children);
      }
+     result= result + `
+     ` + layerToCodeClose(obj[i])
   }
   return result;
 }
 
 
-function searchcss(obj) {
+function searchcss(obj, parent=null) {
+  if (parent==null)
+  parent = {width:375,height:812} //se não tiver pai, use as medidas do canvas
+
   let result = "";
-  // TODO consertar isto. 
+
   for (let i in obj) {
      result= result + `
-     ` + layersToCSS(obj[i])
-    //processa aqui
-         
+     ` + layersToCSS(obj[i],parent)
+        
 
       if (obj[i].children.length >0) {
         result= result + `
-        ` + searchcss(obj[i].children);
+        ` + searchcss(obj[i].children,obj[i]);
      }
   }
   return result;
