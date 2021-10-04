@@ -1,5 +1,5 @@
 <template>
-<splitpanes horizontal :push-other-panes="true" style="height: 100vh;margin:0px padding:0px;overflow:hidden;" >
+<splitpanes horizontal :push-other-panes="false" style="height: 100vh;margin:0px padding:0px;overflow:hidden;" >
     <pane min-size="10" size="10" max-size="10" style="display: flex" >
         <div style="display: flex; flex: 1" class="noselect">
             <div class="logo-container">
@@ -12,15 +12,15 @@
         </div>
     </pane>
     <pane>
-        <splitpanes :push-other-panes="false" >
-            <pane min-size="5" size="20" max-size="20"  >
+        <splitpanes :push-other-panes="false">
+            <pane min-size="5" size="20" max-size="20" style="width:300px" >
                 <splitpanes horizontal :push-other-panes="false" >
                     <pane min-size="5"   >
                         <Box titulo="Layers" v-if="activeTab == 0">
                             <Layers />
                         </Box>
                     </pane>
-                    <pane min-size="10" :style="{background:activeTab ===1?'#FFF':''}">
+                    <pane min-size="20" size="250" :style="{background:activeTab ===1?'#FFF':''}">
                     <qrcode-vue :value="url" :size="170" level="H" v-if="url && activeTab == 1" class="qrcode" foreground="#604c72" />
   
                         <Box titulo="Properties"  v-if="activeTab == 0">

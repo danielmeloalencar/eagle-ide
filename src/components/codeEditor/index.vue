@@ -53,6 +53,12 @@ export default {
     },
 
     mounted() {
+        eventBus.$on("updateCode",()=>{
+            setTimeout(()=>{
+                 this.atualizarCodigo();
+            },1000)
+           
+        });
            },
     watch:{
         url: function (url){

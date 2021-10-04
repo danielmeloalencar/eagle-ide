@@ -225,6 +225,7 @@ function getRandomInt(min, max) {
                 id: id,
                 parent: null,
                 children: [],
+                align:["left","top"],
                 x: getRandomInt(0,this.$refs.container.clientWidth / 4),
                 y: getRandomInt(0,this.$refs.container.clientHeight / 4),
                 height:100,
@@ -256,6 +257,8 @@ function getRandomInt(min, max) {
                         ...obj,
                         ...{
                             caption: obj.name,
+                            width:150,
+                            height:50
       
                         }
                     }
@@ -325,11 +328,11 @@ function getRandomInt(min, max) {
     height: 812px;
     background-color: #fff;
     overflow: hidden;
-    border: 0px solid rgb(80, 78, 78);
+    border:none;
     color: black;
     position: relative;
-    border-radius: 30px;
-     mask-image: url('../../assets/iphone.png');
+    border-radius: 2px;
+    /*mask-image: url('../../assets/iphone.png'); */
     -webkit-box-shadow: 5px 5px 18px 5px rgba(0, 0, 0, 0.541);
     box-shadow: 5px 5px 18px 5px rgba(0, 0, 0, 0.507);
 }
