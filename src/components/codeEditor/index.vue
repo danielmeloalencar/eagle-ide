@@ -1,27 +1,21 @@
 <template>
 <div class="container">
-    <button @click="generateCode"> GET CODE </button>
-        <button @click="atualizarCodigo"> Refresh CODE </button>
-    <div style="">Dispositivos conectados: {{dispositivos}} </div>
+    <button @click="generateCode"> Get Code and Open App </button>|
+    <button @click="atualizarCodigo(false)">Get Code and Update App </button>|
+    <button @click="atualizarCodigo(true)">Update App Using Current Code</button>
+    <div style="font-size:14px;color:cyan;">Dispositivos conectados: {{dispositivos}} </div>
 
-     <VueCodeEditor v-model="codigo" @init="editorInit"  lang="jsx" theme="dracula" width="100%" height="85%" :options="{
+     <VueCodeEditor v-model="codigo" @init="editorInit" lang="jsx" theme="dracula" width="100%" height="85%" :options="{
         enableBasicAutocompletion: true,
         enableLiveAutocompletion: true,
         fontSize: 14,
-        highlightActiveLine: true,
+        highlightActiveLine: false,
         enableSnippets: true,
         showLineNumbers: true,
         tabSize: 2,
         showPrintMargin: false,
         showGutter: true,
-    }" :commands="[
-        {
-            name: 'save',
-            bindKey: { win: 'Ctrl-s', mac: 'Command-s' },
-            exec: null,
-            readOnly: true,
-        },
-    ]" />
+    }" :commands="[]" />
 </div>
 </template>
 
@@ -45,7 +39,8 @@ export default {
             dispositivos:0,
             codigo:``,
             cod: ``,
-            foto:''
+            foto:'',
+            snack:null
         };
     },
     created() {
@@ -53,12 +48,7 @@ export default {
     },
 
     mounted() {
-        eventBus.$on("updateCode",()=>{
-            setTimeout(()=>{
-                 this.atualizarCodigo();
-            },1000)
-           
-        });
+        eventBus.$on("updateCode",()=>this.atualizarCodigo());
            },
     watch:{
         url: function (url){
@@ -66,7 +56,7 @@ export default {
         },
         codigo: function (){
            
-             this.atualizarCodigo();  
+             this.atualizarCodigo(true);  
         }
     },
 
@@ -119,8 +109,15 @@ canvas.toBlob((blob) =>{
             });
 
         },
-            atualizarCodigo: async function () {
+            atualizarCodigo: async function (onlyupdate=false) {
+                if(this.snack == null)
+                    {
+                        this.generateCode();
+                        return;
+                    }
+                    if(onlyupdate==false)
                   this.codigo=this.getCode();
+
             this.snack.updateFiles({
                 'App.js': {
                     type: 'CODE',

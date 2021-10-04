@@ -27,7 +27,7 @@ export default {
 
   data: function() {
     return {
-      active: true,
+      active: false,
       draggable: true,
       propertiesMutable: this.properties,
     };
@@ -61,14 +61,23 @@ export default {
       
     },
     onBeforeActivate(){
-       
+      if(store.state.selectedComponent ===this.properties.name)
+      return ;
+    
+      //hacke para não selecionar componente pai quando selecionar o filho
+      if(store.state.selectedBeforeComponent!==null)
+      eventBus.$emit("desativarComponente", store.state.selectedBeforeComponent );
+
       eventBus.$emit("showProperties", this.properties.name);
       store.state.selectedComponent = this.properties.name;
-      console.log("ATIVADO", store.state.selectedComponent)
-      eventBus.$emit("desativarComponente", this.properties.name);
+       //hacke para não selecionar componente pai quando selecionar o filho
+      store.state.selectedBeforeComponent = this.properties.name
+     /// console.log("ATIVADO", store.state.selectedComponent)     
+       
+    
     },
     onActivated() {
-   
+      eventBus.$emit("showProperties", this.properties.name);
       
       },
     onDragStartCallback() {
@@ -126,14 +135,15 @@ export default {
             this.propertiesMutable.x = this.propertiesMutable.x - 1 * multiply;
           if (type === "resize")
             this.propertiesMutable.width =
-              this.propertiesMutable.width - 1 * multiply;
+            this.propertiesMutable.width - 1 * multiply;
           break;
         case "ArrowRight":
           if (type === "move")
             this.propertiesMutable.x = this.propertiesMutable.x + 1 * multiply;
           if (type === "resize")
             this.propertiesMutable.width =
-              this.propertiesMutable.width + 1 * multiply;
+            this.propertiesMutable.width + 1 * multiply;
+            
           break;
         case "Delete":
           eventBus.$emit("deleteComponent", this.propertiesMutable.name);
@@ -155,6 +165,11 @@ export default {
   },
   mounted() {
 
+    //Pequeno hack para não selecionar componente pai ao selecionar o filho
+    eventBus.$on("desativarComponente", (name) => {
+         console.log("COMPONENTE DESATIVADO",name)
+      this.active = name !== this.properties.name;
+      });
 
     eventBus.$on("componentSelected", (name) => {
       console.log("COMPONENTE SELECIONADO",name)

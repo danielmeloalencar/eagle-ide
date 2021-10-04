@@ -7,6 +7,7 @@ export default new Vuex.Store({
   state: {
     grid: { x: 1, y: 1 },
     selectedComponent: null,
+    selectedBeforeComponent: null,
     activePage: 0,
     project: {
       projectName: "Untitled",

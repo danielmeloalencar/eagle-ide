@@ -56,6 +56,7 @@ export default {
         },
         handleCanvasClick: function () {
             store.state.selectedComponent = null;
+            store.state.selectedBeforeComponent = null;
             eventBus.$emit("showProperties", store.state.project.pages[store.state.activePage].name);
 
             //alert("CARREGA PROPRIEDADES DO CANVAS");
@@ -94,22 +95,27 @@ export default {
         },
 
         loadComponents(pageIndex = 0) {
-            let data = store.state.project.pages[pageIndex].components;
-            return search(data);
 
-            function search(obj, parent = null) {
+          const search = (obj, parent = null) =>{
                 for (let i in obj) {
-                    // this.loadComponent(parent, obj[i])
+                    console.log("CARREGANDO COMPONENTE AGORA ", obj[i].name)
+                    this.loadComponent(parent,obj[i])
+                  /*
                     eventBus.$emit("loadComponent", {
                         parent: parent,
                         component: obj[i]
                     })
+                    */
                     /// console.log(obj[i], parent);
                     if (obj[i].children.length >0) {
-                        return search(obj[i].children, obj[i].name);
+                        search(obj[i].children, obj[i].name);
                     }
                 }
             }
+
+
+            let data = store.state.project.pages[pageIndex].components;
+            search(data);
         },
         loadComponent(parent, properties) {
             let instance = null;
