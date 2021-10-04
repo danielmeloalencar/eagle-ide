@@ -32,6 +32,17 @@ export default {
       propertiesMutable: this.properties,
     };
   },
+  watch:{
+ 
+    'properties': {
+      deep:true,
+      handler(){
+       //TODO eventBus.$emit("updateCode");
+      }
+    },
+
+  }
+  ,
   computed: {
     grid() {
       return store.state.grid;
@@ -47,6 +58,7 @@ export default {
       this.properties.y = parseInt(y);
       this.properties.width = width;
       this.properties.height = height;
+      
     },
     onActivated() {
       eventBus.$emit("showProperties", this.properties.name);

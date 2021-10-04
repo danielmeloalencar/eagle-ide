@@ -1,33 +1,34 @@
 <template>
 <div class="container">
     <div class="component-type">Type: {{component.type}}</div>
-      <div class="properties">
-       <Parent :component="component"/>
-       <Position :component="component" />
-       <Size :component="component" />
-       <Name :component="component"/>
-       <Caption :component="component" />
-       <ZIndex :component="component" />
+    <div class="properties">
+        <Anchors :component="component" />
+        <Position :component="component" />
+        <Size :component="component" />
+        <Name :component="component" />
+        <Caption :component="component" />
+        <ZIndex :component="component" />
     </div>
 </div>
 </template>
+
 <script>
 import propertiesEditorMixin from "@/mixins/propertiesEditorMixin";
-import Parent from "@/components/propertiesEditor/properties/parent.vue"
 import Name from "@/components/propertiesEditor/properties/name.vue"
 import Caption from "@/components/propertiesEditor/properties/caption.vue"
 import ZIndex from "@/components/propertiesEditor/properties/zIndex.vue"
 import Position from "@/components/propertiesEditor/properties/position.vue"
 import Size from "@/components/propertiesEditor/properties/size.vue"
+import Anchors from "@/components/propertiesEditor/properties/anchors.vue"
 export default {
     mixins: [propertiesEditorMixin],
-    components:{
-        Parent,
+    components: {
         Name,
         Caption,
         ZIndex,
         Position,
         Size,
+        Anchors
     }
 
 }
@@ -43,7 +44,8 @@ export default {
     color: rgb(143, 143, 143);
     font-size: 13px;
     flex: 1;
-    align-items: center;
+    align-items: flex-start;
+    text-align: left;
 
 }
 

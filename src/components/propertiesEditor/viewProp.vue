@@ -2,7 +2,7 @@
 <div class="container">
     <div class="component-type">Type: {{component.type}}</div>
     <div class="properties">
-       <Parent :component="component"/>
+       <Anchors :component="component" />
        <Position :component="component" />
        <Size :component="component" />
        <Name :component="component"/>
@@ -14,23 +14,23 @@
 
 <script>
 import propertiesEditorMixin from "@/mixins/propertiesEditorMixin";
-import Parent from "@/components/propertiesEditor/properties/parent.vue"
 import Name from "@/components/propertiesEditor/properties/name.vue"
 import BackgroundColor from "@/components/propertiesEditor/properties/backgroundColor.vue"
 import ZIndex from "@/components/propertiesEditor/properties/zIndex.vue"
 import Position from "@/components/propertiesEditor/properties/position.vue"
 import Size from "@/components/propertiesEditor/properties/size.vue"
+import Anchors from "@/components/propertiesEditor/properties/anchors.vue"
 import eventBus from "@/event-bus";
 
 export default {
     mixins: [propertiesEditorMixin],
     components:{
-        Parent,
         Name,
         BackgroundColor,
         ZIndex,
         Position,
-        Size
+        Size,
+         Anchors
     },
  beforeDestroy() {
       eventBus.$off("componentUpdated");
@@ -55,7 +55,8 @@ export default {
     color: rgb(143, 143, 143);
     font-size: 13px;
     flex: 1;
-    align-items: center;
+    align-items: flex-start;
+    text-align: left;
 
 }
 
