@@ -27,7 +27,6 @@ export default {
 
   data: function() {
     return {
-      active: false,
       draggable: true,
       propertiesMutable: this.properties,
     };
@@ -65,7 +64,7 @@ export default {
       return ;
     
       //hacke para não selecionar componente pai quando selecionar o filho
-      if(store.state.selectedBeforeComponent!==null)
+      if(store.state.selectedBeforeComponent!=null)
       eventBus.$emit("desativarComponente", store.state.selectedBeforeComponent );
 
       eventBus.$emit("showProperties", this.properties.name);
